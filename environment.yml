@@ -1,0 +1,18 @@
+# conda environment for pose estimation tools
+name: workout
+
+channels:
+  - anaconda
+  - conda
+dependencies:
+  - python=3.8
+  - pip
+  - numpy
+  - ipython
+  - pylint>=2.5.0
+  - pycodestyle
+  - pip:
+      - scipy
+      - pyyaml
+      - flask
+      - opencv-python

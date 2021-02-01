@@ -1,0 +1,6 @@
+[pyocdestyle]
+count = True
+max-line-length = 120
+max-doc-length = 120
+statistics = True
+show-source = True
