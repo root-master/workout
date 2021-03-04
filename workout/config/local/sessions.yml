@@ -1,6 +1,6 @@
 short_session: [ { pod_name: "short_pod", video_capture: True } ]
 short_pod: [ { move: "rest", "sets": 1, "set_duration": 2, reps: null, set_rest_duration: 0, title: "Get Ready to WORKOUT" },
-             { move: "test", "sets": 3, "set_duration": 5, reps: 10, title: "Let's SQUAT", set_rest_duration: 5 } ]
+             { move: "squad", "sets": 3, "set_duration": 5, reps: 10, title: "Let's SQUAT", set_rest_duration: 5 } ]
 
 session_0: [ { pod_name: "warm_up_0", video_capture: False },
              { pod_name: "workout_0", video_capture: True },
