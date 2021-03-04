@@ -4,12 +4,12 @@ Workout pipeline. Show the demo to athletes and capture their performance.
 import os
 import time
 
-from workout.data_types.athlete import Athlete
-from workout.data_types.workout_session import WorkoutSession
+from workout_demo.data_types.athlete import Athlete
+from workout_demo.data_types.workout_session import WorkoutSession
 
-from workout.context import Context
-from workout.video.capture import Capture
-from workout.video.writer import Writer
+from workout_demo.context import Context
+from workout_demo.video.capture import Capture
+from workout_demo.video.writer import Writer
 
 context = Context(env="local")
 input_params = context.parameters["input_params"]

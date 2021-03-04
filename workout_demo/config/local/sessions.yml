@@ -8,6 +8,6 @@ session_0: [ { pod_name: "warm_up_0", video_capture: False },
 "warm_up_0": [ { move: "rest", "sets": 1, "set_duration": 5, reps: null, set_rest_duration: 0, title: "Get Ready to WARM_UP" },
                { move: "stretch", "sets": 1, "set_duration": 30, reps: null, set_rest_duration: 0, title: "Let's STRETCH" },
                { move: "jumping_jack", "sets": 1, "set_duration": 30, "reps": 10, set_rest_duration: 0, title: "Jumping Jacks" },
-               { move: "rest", "sets": 1, "set_duration": 5, reps: null, title: "Get Ready to the main workout", set_rest_duration: 0 } ]
+               { move: "rest", "sets": 1, "set_duration": 5, reps: null, title: "Get Ready to the main workout_demo", set_rest_duration: 0 } ]
 "workout_0": [ { move: "squat", "sets": 2, "set_duration": 30, reps: 10, title: "Let's SQUAT", set_rest_duration: 5 } ]
 "cool_down_0": [ { move: "stretch", "sets": 1, "set_duration": 20, reps: 10, title: "Let's COOL DOWN", set_rest_duration: 10 } ]

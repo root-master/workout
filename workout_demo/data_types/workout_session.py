@@ -3,7 +3,7 @@ Workout Session data_type and utils.
 """
 from typing import Dict
 
-from workout.utils.utils import now, date
+from workout_demo.utils.utils import now, date
 
 
 class WorkoutSession:
