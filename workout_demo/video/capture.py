@@ -7,7 +7,7 @@ from queue import Queue
 import cv2
 import pytz
 
-from workout.video.writer import Writer
+from workout_demo.video.writer import Writer
 
 
 def now():
