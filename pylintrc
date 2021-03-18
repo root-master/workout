@@ -1,4 +1,5 @@
 [MASTER]
+--ignore=workout/ml/*
 
 # Profiled execution.
 profile=no

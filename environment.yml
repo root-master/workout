@@ -11,6 +11,9 @@ dependencies:
   - ipython
   - pylint>=2.5.0
   - pycodestyle
+  - torch
+  - torchvision
+  - torchaudio
   - pip:
       - scipy
       - pyyaml
