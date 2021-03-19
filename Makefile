@@ -1,7 +1,7 @@
-create-environment:
+create_environment:
 	conda env create --file environment.yml
 
-update-environment:
+update_environment:
 	conda env update --file environment.yml --prune
 
 pylint:
@@ -15,9 +15,12 @@ install_detectron2:
 	python -m pip install -e detectron2
 
 install:
-	conda env update --file environment.yml --prune && \
+	make update_environment && \
 	make install_detectron2 && \
 	python -m pip install -e .
 
-wheel:
+build_wheel:
 	python setup.py bdist_wheel
+
+build_egg:
+	python setup.py bdist_egg
