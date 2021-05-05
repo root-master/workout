@@ -10,7 +10,7 @@ update_environment:
 	conda env update --file environment.yml --prune
 
 activte_environment:
-	conda activate workout
+	source activate workout
 
 pylint:
 	pylint --rcfile=pylintrc workout && \
