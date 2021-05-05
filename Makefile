@@ -18,9 +18,7 @@ pylint:
 
 install_detectron2:
 	make clean && \
-	cd workout/ml/pose_estimation/ && \
-	git clone https://github.com/facebookresearch/detectron2.git && \
-	python -m pip install -e detectron2
+	python -m pip install 'git+https://github.com/facebookresearch/detectron2.git'
 
 install:
 	make update_environment && \
@@ -36,5 +34,15 @@ build_egg:
 test:
 	pytest tests/
 
+install_gcc:
+	sudo yum install gcc72 gcc72-c++
+
+download_checkpoints:
+	mkdir checkpoints && \
+	cd checkpoints && \
+	curl https://dl.fbaipublicfiles.com/detectron2/COCO-Keypoints/keypoint_rcnn_R_101_FPN_3x/138363331/model_final_997cc7.pkl -o model_final_997cc7.pkl
+
 build:
 	make clean activte_environment pylint install build_wheel build_egg
+
+
