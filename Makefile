@@ -9,6 +9,9 @@ create_environment:
 update_environment:
 	conda env update --file environment.yml --prune
 
+activte_environment:
+	conda activate workout
+
 pylint:
 	pylint --rcfile=pylintrc workout && \
 	python -m pycodestyle --max-line-length=120 workout --config pycodestyle
@@ -34,4 +37,4 @@ test:
 	pytest tests/
 
 build:
-	make clean pylint install build_wheel build_egg
+	make clean activte_environment pylint install build_wheel build_egg

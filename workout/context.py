@@ -64,5 +64,5 @@ class Context:
         del self.parameters
 
     def get_params(self, env):
-        """Get's env's params."""
+        """Returns env's params."""
         return self.all_parameters[env]
