@@ -1,0 +1,10 @@
+# conda environment for pose estimation tools
+name: detectron2
+
+channels:
+  - anaconda
+  - conda
+  - conda-forge
+dependencies:
+  - python=3.7
+  - numpy

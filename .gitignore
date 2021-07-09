@@ -137,5 +137,5 @@ dev/
 dev
 data/
 detectron2/
-workout/ml/pose_estimation/detectron2/
+ml/pose_estimation/detectron2/
 checkpoints/

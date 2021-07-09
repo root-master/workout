@@ -6,16 +6,20 @@ channels:
   - conda
   - conda-forge
 dependencies:
-  - python=3.8
+  - python=3.7
   - pip
-  - numpy
+  - pip3
   - ipython
   - pylint>=2.5.0
   - pycodestyle
-  - pytorch>=1.8
   - pip:
       - scipy
       - pyyaml
       - pytest
       - flask
       - opencv-python
+      - numpy
+  - pip3:
+      - torch
+      - torchvision
+      - torchaudio
