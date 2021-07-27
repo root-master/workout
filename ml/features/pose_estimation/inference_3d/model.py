@@ -5,7 +5,7 @@
 # LICENSE file in the root directory of this source tree.
 #
 
-import torch.nn as nn
+from torch import nn
 
 
 class TemporalModelBase(nn.Module):
@@ -85,18 +85,16 @@ class TemporalModel(TemporalModelBase):
 
     def __init__(self, num_joints_in, in_features, num_joints_out,
                  filter_widths, causal=False, dropout=0.25, channels=1024, dense=False):
-        """
-        Initialize this model.
-        
+        """Initialize this model.
         Arguments:
-        num_joints_in -- number of input joints (e.g. 17 for Human3.6M)
-        in_features -- number of input features for each joint (typically 2 for 2D input)
-        num_joints_out -- number of output joints (can be different than input)
-        filter_widths -- list of convolution widths, which also determines the # of blocks and receptive field
-        causal -- use causal convolutions instead of symmetric convolutions (for real-time applications)
-        dropout -- dropout probability
-        channels -- number of convolution channels
-        dense -- use regular dense convolutions instead of dilated convolutions (ablation experiment)
+            num_joints_in -- number of input joints (e.g. 17 for Human3.6M)
+            in_features -- number of input features for each joint (typically 2 for 2D input)
+            num_joints_out -- number of output joints (can be different than input)
+            filter_widths -- list of convolution widths, which also determines the # of blocks and receptive field
+            causal -- use causal convolutions instead of symmetric convolutions (for real-time applications)
+            dropout -- dropout probability
+            channels -- number of convolution channels
+            dense -- use regular dense convolutions instead of dilated convolutions (ablation experiment)
         """
         super().__init__(num_joints_in, in_features, num_joints_out, filter_widths, causal, dropout, channels)
 
@@ -140,11 +138,9 @@ class TemporalModel(TemporalModelBase):
 
 
 class TemporalModelOptimized1f(TemporalModelBase):
-    """
-    3D pose estimation model optimized for single-frame batching, i.e.
+    """3D pose estimation model optimized for single-frame batching, i.e.
     where batches have input length = receptive field, and output length = 1.
     This scenario is only used for training when stride == 1.
-    
     This implementation replaces dilated convolutions with strided convolutions
     to avoid generating unused intermediate results. The weights are interchangeable
     with the reference implementation.
@@ -152,17 +148,15 @@ class TemporalModelOptimized1f(TemporalModelBase):
 
     def __init__(self, num_joints_in, in_features, num_joints_out,
                  filter_widths, causal=False, dropout=0.25, channels=1024):
-        """
-        Initialize this model.
-        
+        """Initialize this model.
         Arguments:
-        num_joints_in -- number of input joints (e.g. 17 for Human3.6M)
-        in_features -- number of input features for each joint (typically 2 for 2D input)
-        num_joints_out -- number of output joints (can be different than input)
-        filter_widths -- list of convolution widths, which also determines the # of blocks and receptive field
-        causal -- use causal convolutions instead of symmetric convolutions (for real-time applications)
-        dropout -- dropout probability
-        channels -- number of convolution channels
+            num_joints_in -- number of input joints (e.g. 17 for Human3.6M)
+            in_features -- number of input features for each joint (typically 2 for 2D input)
+            num_joints_out -- number of output joints (can be different than input)
+            filter_widths -- list of convolution widths, which also determines the # of blocks and receptive field
+            causal -- use causal convolutions instead of symmetric convolutions (for real-time applications)
+            dropout -- dropout probability
+            channels -- number of convolution channels
         """
         super().__init__(num_joints_in, in_features, num_joints_out, filter_widths, causal, dropout, channels)
 

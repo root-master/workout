@@ -41,4 +41,4 @@ def index_of_largest_bbox(bbox_array: numpy.ndarray):
 #
 # bbox_area = calculate_bbox_area(bbox_array)
 # i = index_of_largest_bbox_area(bbox_area)
-# run ml/pose_estimation/inference/inference_3d/utils.py
+# run ml/features/pose_estimation/inference_3d/utils.py

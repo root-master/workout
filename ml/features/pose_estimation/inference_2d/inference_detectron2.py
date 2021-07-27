@@ -1,5 +1,5 @@
 """
-This module uses detectron2 to run inference on a frame
+This module uses detectron2 to run pose_estimation on a frame
 
 Detectron2 is Facebook AI Research's next generation library that provides
 state-of-the-art detection and segmentation algorithms.
@@ -8,7 +8,7 @@ To install detectron2 see https://github.com/facebookresearch/detectron2/blob/ma
 To use latest gcc for conda (that's required for detectron2) run:
 conda update libgcc
 """
-from typing import Dict
+from typing import Dict, List
 
 import numpy
 import torch
@@ -36,7 +36,7 @@ def get_config():
     return cfg
 
 
-class Detectron2_Prediction:
+class Detectron2_Predictor:
     def __init__(self):
         self.cfg = get_config()
         self.predictor = self.load_detectron2_model()
@@ -52,7 +52,7 @@ class Detectron2_Prediction:
     def infer2d_to_dict_of_tensors(self, image: numpy.ndarray) -> Dict:
         """Infer the model on an input image and gets the dict results."""
         output = self.infer2d(image)
-        output = output["instances"].get_fields()
+        output = output["instances"].to("cpu").get_fields()
         output["image"] = {}
         output["image"]["width"] = image.shape[1]
         output["image"]["height"] = image.shape[0]
@@ -68,13 +68,13 @@ class Detectron2_Prediction:
                 output[k] = v.numpy()
         return output
 
-    def infer2d_to_dict_of_python_list(self, image: numpy.ndarray) -> Dict:
-        """Infer the model on an input image and gets the dict results."""
-        output = self.infer2d_to_dict_of_numpy_array(image)
-        for k, v in output.items():
-            if isinstance(v, numpy.ndarray):
-                output[k] = v.tolist()
-        return output
+    def run_on_video(self, list_of_frames: List[numpy.ndarray]) -> List[Dict]:
+        """Runs the 2d pose estimation model on a list of frames."""
+        list_of_pose_features_dict = []
+        for frame_i, image in enumerate(list_of_frames):
+            pose_features_dict = self.infer2d_to_dict_of_numpy_array(image)
+            list_of_pose_features_dict.append(pose_features_dict)
+        return list_of_pose_features_dict
 
     def write_show_keypoints(self, image: numpy.ndarray, show: bool = True,
                              write: bool = False, result_file: str = None):
@@ -86,12 +86,3 @@ class Detectron2_Prediction:
             cv2.imwrite(result_file, out.get_image()[:, :, ::-1])
         if show:
             cv2.imshow("show", out.get_image()[:, :, ::-1])
-
-
-detectron2_predictor = Detectron2_Prediction()
-image = cv2.imread("data/test_images/four_ppl.jpg")
-# output = detectron2_predictor.infer2d(image)
-# output_dict = detectron2_predictor.infer2d_to_dict_of_tensors(image)
-output_numpy = detectron2_predictor.infer2d_to_dict_of_numpy_array(image)
-# output_python = detectron2_predictor.infer2d_to_dict_of_python_list(image)
-# run ml/pose_estimation/inference/inference_2d/inference_detectron2.py

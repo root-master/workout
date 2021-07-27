@@ -7,12 +7,12 @@ from typing import List, Dict
 import numpy
 import torch
 
-from ml.pose_estimation.inference.inference_3d.generators import UnchunkedGenerator
-from ml.pose_estimation.inference.inference_3d.model import TemporalModel
-from ml.pose_estimation.inference.inference_3d.utils import normalize_screen_coordinates, index_of_largest_bbox
+from ml.features.pose_estimation.inference_3d.generators import UnchunkedGenerator
+from ml.features.pose_estimation.inference_3d.model import TemporalModel
+from ml.features.pose_estimation.inference_3d.utils import normalize_screen_coordinates, index_of_largest_bbox
 
 
-class VideoPose3d_coco_prediction:
+class VideoPose3d_coco_predictor:
     def __init__(self):
         self.kps_left = [1, 3, 5, 7, 9, 11, 13, 15]
         self.kps_right = [2, 4, 6, 8, 10, 12, 14, 16]
@@ -20,6 +20,8 @@ class VideoPose3d_coco_prediction:
         self.joints_right = [1, 2, 3, 14, 15, 16]
         self.joints_left = [4, 5, 6, 11, 12, 13]
         self.joints = 17
+        self.load_model()
+        self.load_weights()
 
     def load_model(self):
         """Loads VideoPose3d model."""
@@ -47,12 +49,12 @@ class VideoPose3d_coco_prediction:
         """
         keypoints_2d = numpy.zeros((len(inference_2d_list), self.joints, 2))
         keypoints_2d_normalized = numpy.zeros((len(inference_2d_list), self.joints, 2))
-        for t, inf_2d_dict in enumerate(inference_2d_list):
-            i = index_of_largest_bbox(inf_2d_dict["pred_boxes"])
-            kps_2d = inf_2d_dict["pred_keypoints"][i]
+        for t, pose_features_dict in enumerate(inference_2d_list):
+            i = index_of_largest_bbox(pose_features_dict["pred_boxes"])
+            kps_2d = pose_features_dict["pred_keypoints"][i]
             keypoints_2d[t, :, :] = kps_2d[:, :2]
-            width = inf_2d_dict["image"]["width"]
-            height = inf_2d_dict["image"]["height"]
+            width = pose_features_dict["image"]["width"]
+            height = pose_features_dict["image"]["height"]
             keypoints_2d_normalized = normalize_screen_coordinates(keypoints_2d, width, height)
         return keypoints_2d, keypoints_2d_normalized
 
@@ -67,7 +69,7 @@ class VideoPose3d_coco_prediction:
                                             joints_right=self.joints_right)
         with torch.no_grad():
             self.model.eval()
-            for _, batch, batch_2d in test_generator.next_epoch():
+            for _, _, batch_2d in test_generator.next_epoch():
                 inputs_2d = torch.from_numpy(batch_2d.astype("float32"))
                 if torch.cuda.is_available():
                     inputs_2d = inputs_2d.cuda()
@@ -83,10 +85,3 @@ class VideoPose3d_coco_prediction:
                     predicted_3d_pos = torch.mean(predicted_3d_pos, dim=0, keepdim=True)
         keypoints_3d = predicted_3d_pos.squeeze(0).cpu().numpy()
         return keypoints_3d
-
-
-v = VideoPose3d_coco_prediction()
-v.load_model()
-v.load_weights()
-
-# run ml/pose_estimation/inference/inference_3d/inference_VideoPose3d.py

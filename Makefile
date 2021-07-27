@@ -13,8 +13,8 @@ activte_environment:
 	source activate workout
 
 pylint:
-	pylint --rcfile=pylintrc workout && \
-	python -m pycodestyle --max-line-length=120 workout --config pycodestyle
+	pylint --rcfile=pylintrc ml && \
+	python -m pycodestyle --max-line-length=120 ml --config pycodestyle
 
 install_detectron2:
 	make clean && \
