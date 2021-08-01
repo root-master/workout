@@ -1,12 +1,13 @@
 """
 run inferece pipeline on local.
-run ml/features/pose_estimation/pipeline/local.py
+run ml/features/pose_estimation/pipeline/feature_pipeline.py
 """
 import json
 from typing import List, Dict
 
 import numpy
 import cv2
+import boto3
 
 from ml.features.pose_estimation.inference_2d.inference_detectron2 import Detectron2_Predictor
 from ml.features.pose_estimation.inference_3d.inference_VideoPose3d import VideoPose3d_coco_predictor
@@ -42,6 +43,14 @@ def read_video(path_to_video: str,
     return list_of_frames
 
 
+def get_url_video_s3(bucket, key):
+    s3_client = boto3.client("s3")
+    url = s3_client.generate_presigned_url("get_object",
+                                           Params={"Bucket": bucket, "Key": key},
+                                           ExpiresIn=600)  # this url will be available for 600 seconds
+    return url
+
+
 def save_json(data: List[Dict], path_to_json: str):
     """Save data to JSON.
     data: Output of pose estimation pipeline to save.
@@ -63,11 +72,29 @@ def process_to_json(list_of_pose_features_dict, keypoints_2d, keypoints_3d):
     return list_of_pose_features_dict
 
 
-def run(path_to_video: str,
+def write_json_to_s3(data, bucket, key):
+    s3 = boto3.client("s3")
+    s3.put_object(
+        Body=json.dumps(data),
+        Bucket=bucket,
+        Key=key
+    )
+
+
+def run(source: str,
+        bucket: str = None,
+        video_path_s3: str = None,
+        path_to_video_local: str = None,
         path_to_json: str = None,
         frame_start: int = None,
         frame_end: int = None):
-    """Runs the pose estimation pipeline in local."""
+    """Runs the pose estimation pipeline in local.
+    video_source: ["local", "s3"]
+    """
+    if source == "s3":
+        path_to_video = get_url_video_s3(bucket, video_path_s3)
+    else:
+        path_to_video = path_to_video_local
     list_of_frames = read_video(path_to_video, frame_start, frame_end)
     inference_2d_predictor = Detectron2_Predictor()
     inference_3d_predictor = VideoPose3d_coco_predictor()
@@ -76,11 +103,22 @@ def run(path_to_video: str,
         inference_3d_predictor.extract_keypoints_from_detectron2_output(list_of_pose_features_dict)
     keypoints_3d = inference_3d_predictor.infer3d(keypoints_2d_normalized)
     list_of_pose_features_dict = process_to_json(list_of_pose_features_dict, keypoints_2d, keypoints_3d)
-    if path_to_json:
-        save_json(list_of_pose_features_dict, path_to_json)
+
+    if source == "s3":
+        if path_to_json:
+            write_json_to_s3(list_of_pose_features_dict, bucket, path_to_json)
+        else:
+            save_json(list_of_pose_features_dict, path_to_json)
 
     return list_of_pose_features_dict
 
 
 def main():
     pass
+
+
+run(source="s3",
+    bucket="workout-vision",
+    video_path_s3="data/workout/squat/video/from_1612153353.520448_to_1612153358.573516.avi",
+    path_to_json="data/workout/squat/features/from_1612153353.520448_to_1612153358.573516.json"
+    )
