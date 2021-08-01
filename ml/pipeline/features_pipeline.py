@@ -97,9 +97,10 @@ def run(source: str,
     else:
         path_to_video = path_to_video_local
     start = time.time()
-    print("1. reading video. Time elapsed = ", int(time.time() - start))
     list_of_frames = read_video(path_to_video, frame_start, frame_end)
+    print("1. reading video. Time elapsed = ", int(time.time() - start))
     print("length of video is ", len(list_of_frames), " frames")
+
     start_2d = time.time()
     inference_2d_predictor = Detectron2_Predictor()
     list_of_pose_features_dict = inference_2d_predictor.run_on_video(list_of_frames)
@@ -126,8 +127,20 @@ def main():
     pass
 
 
+# run(source="s3",
+#     bucket="workout-vision",
+#     video_path_s3="data/workout/squat/video/from_1612153353.520448_to_1612153358.573516.avi",
+#     path_to_json="data/workout/squat/features/from_1612153353.520448_to_1612153358.573516.json"
+#     )
+#
+# run(source="s3",
+#     bucket="workout-vision",
+#     video_path_s3="data/workout/squat/video/from_1612153367.809179_to_1612153372.837415.avi",
+#     path_to_json="data/workout/squat/features/from_1612153367.809179_to_1612153372.837415.json"
+#     )
 run(source="s3",
     bucket="workout-vision",
-    video_path_s3="data/workout/squat/video/from_1612153353.520448_to_1612153358.573516.avi",
-    path_to_json="data/workout/squat/features/from_1612153353.520448_to_1612153358.573516.json"
+    video_path_s3="data/workout/clean/Clean-Ty14ogq_Vok.mp4",
+    path_to_json="data/workout/clean/Clean-Ty14ogq_Vok.json"
     )
+

@@ -5,13 +5,10 @@
 # LICENSE file in the root directory of this source tree.
 #
 
-import matplotlib
-
-matplotlib.use('Agg')
+# matplotlib.use('Agg')
 
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation, writers
-from mpl_toolkits.mplot3d import Axes3D
 import numpy as np
 import subprocess as sp
 

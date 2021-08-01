@@ -92,10 +92,12 @@ lines = [[0, 1], [0, 2], [1, 3], [2, 4],
          [5, 6], [5, 7], [6, 8], [7, 9], [8, 10],
          [11, 12], [11, 13], [12, 14], [13, 15], [14, 16]]
 
-video = read_video("data/workout/squat/video/from_1612153353.520448_to_1612153358.573516.avi")
+video = read_video("data/workout/squat/video/from_1612153367.809179_to_1612153372.837415.avi")
 # data = load_json("data/workout/squat/test.json")
 bucket = "workout-vision"
-key = "data/workout/squat/features/from_1612153353.520448_to_1612153358.573516.json"
+# key = "data/workout/squat/features/from_1612153353.520448_to_1612153358.573516.json"
+key = "data/workout/squat/features/from_1612153367.809179_to_1612153372.837415.json"
+
 data = get_json_from_s3(bucket, key)
 
 # for d in data:
@@ -106,12 +108,12 @@ data = get_json_from_s3(bucket, key)
 data_3d_videopose3d = numpy.load("data/workout/squat/features/features_3d_from_1612153353.520448_to_1612153358.573516.npz.npy")
 data_pp_past = numpy.load("data/workout/squat/features/features_2d_pp_from_1612153353.520448_to_1612153358.573516.npz")
 
-i = 50
+
 keypoint_2d_all = numpy.zeros((len(data), 17, 2))
 keypoint_3d_all = numpy.zeros((len(data), 17, 3))
 
-width = data[i]["image"]["width"]
-height = data[i]["image"]["height"]
+width = data[0]["image"]["width"]
+height = data[0]["image"]["height"]
 
 custom_camera_params['res_w'] = width
 custom_camera_params['res_h'] = height
@@ -131,7 +133,10 @@ keypoints_metadata = {'layout_name': 'coco',
 
 rot = custom_camera_params["orientation"]
 prediction_rot = camera_to_world(keypoint_3d_all, R=rot, t=0)
-prediction_rot[:, :, 2] -= numpy.min(keypoint_3d_all[:, :, 2])
+# prediction_rot[:, :, 2] -= numpy.min(prediction_rot[:, :, 2])
+prediction_rot[:, :, 2] -= numpy.min(prediction_rot[:, :, 2], axis=1, keepdims=True)
+
+# prediction_rot[:, :, 2] -= prediction_rot[:, 3, 2]
 
 keypoints = keypoint_2d_all
 poses = {'Reconstruction': prediction_rot}
@@ -143,10 +148,28 @@ bitrate = 3000
 azim = custom_camera_params['azimuth']
 output = "data/debug.mp4"
 viewport=(custom_camera_params['res_w'], custom_camera_params['res_h'])
-input_video_path = "data/workout/squat/video/from_1612153353.520448_to_1612153358.573516.avi"
+input_video_path = "data/workout/squat/video/from_1612153367.809179_to_1612153372.837415.avi"
 
 render_animation(keypoints, keypoints_metadata, poses, skeleton, fps, bitrate, azim, output, viewport,
                  limit=-1, downsample=1, size=6, input_video_path=input_video_path, input_video_skip=0)
+
+center_hip = 0
+left_hip = 1
+left_knee = 2
+left_ankle = 3
+right_hip = 4
+right_knee = 5
+right_ankle = 6
+mid_section = 7
+neck = 8
+nose = 9
+head = 10
+right_shoulder = 11
+right_elbow = 12
+right_hand = 13
+left_shoulder = 14
+left_elbow = 15
+left_hand = 16
 
 # image = video[i]
 # width = data[i]["image"]["width"]
@@ -166,6 +189,8 @@ render_animation(keypoints, keypoints_metadata, poses, skeleton, fps, bitrate, a
 #
 # # plt.show()
 #
+
+# i = 50
 # keypoint_3d = numpy.array(data[i]["pred_keypoint_3d"])
 # rot = custom_camera_params["orientation"]
 # prediction_rot = camera_to_world(keypoint_3d, R=rot, t=0)
@@ -179,9 +204,9 @@ render_animation(keypoints, keypoints_metadata, poses, skeleton, fps, bitrate, a
 # ys = keypoint_3d[:, 1]
 # zs = keypoint_3d[:, 2]
 # ax.plot3D(xs, ys, zs, 'o')
-# for line in lines:
-#     i, j = line[0], line[1]
-#     x1, y1, z1 = keypoint_3d[i, 0], keypoint_3d[i, 1], keypoint_3d[i, 2]
-#     x2, y2, z2 = keypoint_3d[j, 0], keypoint_3d[j, 1], keypoint_3d[j, 2]
-#     ax.plot3D([x1, x2], [y1, y2], [z1, z2], '-')
+# # for line in lines:
+# #     i, j = line[0], line[1]
+# #     x1, y1, z1 = keypoint_3d[i, 0], keypoint_3d[i, 1], keypoint_3d[i, 2]
+# #     x2, y2, z2 = keypoint_3d[j, 0], keypoint_3d[j, 1], keypoint_3d[j, 2]
+# #     ax.plot3D([x1, x2], [y1, y2], [z1, z2], '-')
 # plt.show()
