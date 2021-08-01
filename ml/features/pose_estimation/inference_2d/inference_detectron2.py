@@ -13,7 +13,7 @@ from typing import Dict, List
 import numpy
 import torch
 import cv2
-
+from tqdm import tqdm
 from detectron2.config import get_cfg
 from detectron2.engine import DefaultPredictor
 from detectron2.model_zoo import model_zoo
@@ -71,7 +71,8 @@ class Detectron2_Predictor:
     def run_on_video(self, list_of_frames: List[numpy.ndarray]) -> List[Dict]:
         """Runs the 2d pose estimation model on a list of frames."""
         list_of_pose_features_dict = []
-        for frame_i, image in enumerate(list_of_frames):
+        for frame_i in tqdm(range(len(list_of_frames))):
+            image = list_of_frames[frame_i]
             pose_features_dict = self.infer2d_to_dict_of_numpy_array(image)
             list_of_pose_features_dict.append(pose_features_dict)
         return list_of_pose_features_dict
