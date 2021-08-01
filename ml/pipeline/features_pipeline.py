@@ -4,6 +4,7 @@ run ml/features/pose_estimation/pipeline/features_pipeline.py
 """
 import json
 from typing import List, Dict
+import time
 
 import numpy
 import cv2
@@ -95,12 +96,19 @@ def run(source: str,
         path_to_video = get_url_video_s3(bucket, video_path_s3)
     else:
         path_to_video = path_to_video_local
+    start = time.time()
+    print("1. reading video. Time elapsed = ", int(time.time() - start))
     list_of_frames = read_video(path_to_video, frame_start, frame_end)
+    print("length of video is ", len(list_of_frames), " frames")
+    start_2d = time.time()
+    print("2. running 2d pose estimation on frames. Time elapsed = ", int(time.time() - start_2d))
     inference_2d_predictor = Detectron2_Predictor()
     inference_3d_predictor = VideoPose3d_coco_predictor()
     list_of_pose_features_dict = inference_2d_predictor.run_on_video(list_of_frames)
     keypoints_2d, keypoints_2d_normalized = \
         inference_3d_predictor.extract_keypoints_from_detectron2_output(list_of_pose_features_dict)
+    start_3d = time.time()
+    print("3. running 3d pose estimation on frames. Time elapsed = ", int(time.time() - start_3d))
     keypoints_3d = inference_3d_predictor.infer3d(keypoints_2d_normalized)
     list_of_pose_features_dict = process_to_json(list_of_pose_features_dict, keypoints_2d, keypoints_3d)
 
