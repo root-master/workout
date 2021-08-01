@@ -1,6 +1,6 @@
 """
 run inferece pipeline on local.
-run ml/features/pose_estimation/pipeline/feature_pipeline.py
+run ml/features/pose_estimation/pipeline/features_pipeline.py
 """
 import json
 from typing import List, Dict

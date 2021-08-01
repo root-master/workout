@@ -1,4 +1,4 @@
-from ml.features.pose_estimation.pipeline.feature_pipeline import run
+from ml.pipeline import run
 
 list_of_pose_features_dict = run(
     path_to_video_local="data/workout/squat/video/from_1612153353.520448_to_1612153358.573516.avi",

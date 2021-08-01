@@ -81,7 +81,7 @@ class VideoPose3d_coco_predictor:
                     # Undo flipping and take average with non-flipped version
                     predicted_3d_pos[1, :, :, 0] *= -1
                     predicted_3d_pos[1, :, self.joints_left + self.joints_right] = \
-                        predicted_3d_pos[1, :, self.joints_left + self.joints_right]
+                        predicted_3d_pos[1, :, self.joints_right + self.joints_left]
                     predicted_3d_pos = torch.mean(predicted_3d_pos, dim=0, keepdim=True)
         keypoints_3d = predicted_3d_pos.squeeze(0).cpu().numpy()
         return keypoints_3d
