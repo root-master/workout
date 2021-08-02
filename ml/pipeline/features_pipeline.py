@@ -141,6 +141,6 @@ def main():
 run(source="s3",
     bucket="workout-vision",
     video_path_s3="data/workout/clean/video/Clean-Ty14ogq_Vok_1.mp4",
-    path_to_json="data/workout/clean/features/Clean-Ty14ogq_Vok.json"
+    path_to_json="data/workout/clean/features/Clean-Ty14ogq_Vok_1.json"
     )
 
