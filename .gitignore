@@ -133,8 +133,6 @@ dmypy.json
 .idea/
 
 # dev on local
-dev/
-dev
 data/
 detectron2/
 ml/features/detectron2/
