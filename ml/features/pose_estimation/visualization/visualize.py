@@ -92,11 +92,12 @@ lines = [[0, 1], [0, 2], [1, 3], [2, 4],
          [5, 6], [5, 7], [6, 8], [7, 9], [8, 10],
          [11, 12], [11, 13], [12, 14], [13, 15], [14, 16]]
 
-video = read_video("data/workout/squat/video/from_1612153367.809179_to_1612153372.837415.avi")
-# data = load_json("data/workout/squat/test.json")
 bucket = "workout-vision"
-# key = "data/workout/squat/features/from_1612153353.520448_to_1612153358.573516.json"
-key = "data/workout/squat/features/from_1612153367.809179_to_1612153372.837415.json"
+video_path_s3 = "data/workout/clean/video/Clean-Ty14ogq_Vok_1.mp4"
+path_to_json = "data/workout/clean/features/Clean-Ty14ogq_Vok_1.json"
+
+video = read_video(video_path_s3)
+key = path_to_json
 
 data = get_json_from_s3(bucket, key)
 
@@ -105,9 +106,8 @@ data = get_json_from_s3(bucket, key)
 #         if "pred" in key:
 #             d[key] = numpy.array(d[key])
 
-data_3d_videopose3d = numpy.load("data/workout/squat/features/features_3d_from_1612153353.520448_to_1612153358.573516.npz.npy")
-data_pp_past = numpy.load("data/workout/squat/features/features_2d_pp_from_1612153353.520448_to_1612153358.573516.npz")
-
+# data_3d_videopose3d = numpy.load("data/workout/squat/features/features_3d_from_1612153353.520448_to_1612153358.573516.npz.npy")
+# data_pp_past = numpy.load("data/workout/squat/features/features_2d_pp_from_1612153353.520448_to_1612153358.573516.npz")
 
 keypoint_2d_all = numpy.zeros((len(data), 17, 2))
 keypoint_3d_all = numpy.zeros((len(data), 17, 3))
@@ -130,7 +130,6 @@ keypoints_metadata = {'layout_name': 'coco',
                                              [2, 4, 6, 8, 10, 12, 14, 16]],
                       'video_metadata': {'squat_short': {'w': width, 'h': height}}}
 
-
 rot = custom_camera_params["orientation"]
 prediction_rot = camera_to_world(keypoint_3d_all, R=rot, t=0)
 # prediction_rot[:, :, 2] -= numpy.min(prediction_rot[:, :, 2])
@@ -140,18 +139,19 @@ prediction_rot[:, :, 2] -= numpy.min(prediction_rot[:, :, 2], axis=1, keepdims=T
 
 keypoints = keypoint_2d_all
 poses = {'Reconstruction': prediction_rot}
-skeleton = Skeleton(parents=numpy.array([-1,  0,  1,  2,  0,  4,  5,  0,  7,  8,  9,  8, 11, 12,  8, 14, 15]),
+skeleton = Skeleton(parents=numpy.array([-1, 0, 1, 2, 0, 4, 5, 0, 7, 8, 9, 8, 11, 12, 8, 14, 15]),
                     joints_left=numpy.array([4, 5, 6, 11, 12, 13]),
                     joints_right=numpy.array([1, 2, 3, 14, 15, 16]))
 fps = 30
 bitrate = 3000
 azim = custom_camera_params['azimuth']
-output = "data/debug.mp4"
-viewport=(custom_camera_params['res_w'], custom_camera_params['res_h'])
-input_video_path = "data/workout/squat/video/from_1612153367.809179_to_1612153372.837415.avi"
+output = "data/workout/clean/output/Clean-Ty14ogq_Vok_1.mp4"
+viewport = (custom_camera_params['res_w'], custom_camera_params['res_h'])
+input_video_path = video_path_s3
 
-render_animation(keypoints, keypoints_metadata, poses, skeleton, fps, bitrate, azim, output, viewport,
-                 limit=-1, downsample=1, size=6, input_video_path=input_video_path, input_video_skip=0)
+render_animation(keypoints, keypoints_metadata, poses, skeleton, fps, bitrate, azim, output,
+                 viewport, limit=-1, downsample=1, size=6, input_video_path=input_video_path,
+                 input_video_skip=0)
 
 center_hip = 0
 left_hip = 1

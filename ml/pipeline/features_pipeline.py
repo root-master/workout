@@ -121,26 +121,3 @@ def run(source: str,
             save_json(list_of_pose_features_dict, path_to_json)
 
     return list_of_pose_features_dict
-
-
-def main():
-    pass
-
-
-# run(source="s3",
-#     bucket="workout-vision",
-#     video_path_s3="data/workout/squat/video/from_1612153353.520448_to_1612153358.573516.avi",
-#     path_to_json="data/workout/squat/features/from_1612153353.520448_to_1612153358.573516.json"
-#     )
-#
-# run(source="s3",
-#     bucket="workout-vision",
-#     video_path_s3="data/workout/squat/video/from_1612153367.809179_to_1612153372.837415.avi",
-#     path_to_json="data/workout/squat/features/from_1612153367.809179_to_1612153372.837415.json"
-#     )
-run(source="s3",
-    bucket="workout-vision",
-    video_path_s3="data/workout/clean/video/Clean-Ty14ogq_Vok_1.mp4",
-    path_to_json="data/workout/clean/features/Clean-Ty14ogq_Vok_1.json"
-    )
-

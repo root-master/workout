@@ -143,6 +143,7 @@ def render_animation(keypoints, keypoints_metadata, poses, skeleton, fps, bitrat
 
     def update_video(i):
         nonlocal initialized, image, lines, points
+        global lines_3d
 
         for n, ax in enumerate(ax_3d):
             ax.set_xlim3d([-radius / 2 + trajectories[n][i, 0], radius / 2 + trajectories[n][i, 0]])
@@ -206,4 +207,6 @@ def render_animation(keypoints, keypoints_metadata, poses, skeleton, fps, bitrat
         anim.save(output, dpi=80, writer='imagemagick')
     else:
         raise ValueError('Unsupported output format (only .mp4 and .gif are supported)')
+    anim.save()
+    # return anim, fig, plt, lines_3d
     plt.close()
