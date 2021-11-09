@@ -7,9 +7,9 @@ from typing import List, Dict
 import numpy
 import torch
 
-from ml.features.pose_estimation.inference_3d.generators import UnchunkedGenerator
-from ml.features.pose_estimation.inference_3d.model import TemporalModel
-from ml.features.pose_estimation.inference_3d.utils import normalize_screen_coordinates, index_of_largest_bbox
+from features.pose_estimation.inference_3d.generators import UnchunkedGenerator
+from features.pose_estimation.inference_3d.model import TemporalModel
+from features.pose_estimation.inference_3d.utils import normalize_screen_coordinates, index_of_largest_bbox
 
 
 class VideoPose3d_coco_predictor:

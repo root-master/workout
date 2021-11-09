@@ -9,9 +9,9 @@ import boto3
 import cv2
 import numpy
 
-from ml.features.pose_estimation.inference_3d.skeleton import Skeleton
-from ml.features.pose_estimation.inference_3d.utils import image_coordinates, camera_to_world
-from ml.features.pose_estimation.visualization.visualization import render_animation
+from features.pose_estimation.inference_3d.skeleton import Skeleton
+from features.pose_estimation.inference_3d.utils import camera_to_world
+from features.visualization.visualization import render_animation
 
 
 def load_json(path_to_json: str):

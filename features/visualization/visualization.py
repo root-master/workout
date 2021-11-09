@@ -113,8 +113,7 @@ def render_animation(keypoints, keypoints_metadata, poses, skeleton, fps, bitrat
             all_frames.append(f)
         effective_length = min(keypoints.shape[0], len(all_frames))
         all_frames = all_frames[:effective_length]
-
-        keypoints = keypoints[input_video_skip:]  # todo remove
+        keypoints = keypoints[input_video_skip:]
         for idx in range(len(poses)):
             poses[idx] = poses[idx][input_video_skip:]
 
