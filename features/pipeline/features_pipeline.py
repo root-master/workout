@@ -1,6 +1,5 @@
 """
-run inferece pipeline on local.
-run ml/pipeline/features_pipeline.py
+Runs inference on videos from local or s3.
 """
 import json
 from typing import List, Dict
@@ -10,8 +9,8 @@ import numpy
 import cv2
 import boto3
 
-from ml.features.pose_estimation.inference_2d.inference_detectron2 import Detectron2_Predictor
-from ml.features.pose_estimation.inference_3d.inference_VideoPose3d import VideoPose3d_coco_predictor
+from features.pose_estimation.inference_2d.inference_detectron2 import Detectron2_Predictor
+from features.pose_estimation.inference_3d.inference_VideoPose3d import VideoPose3d_coco_predictor
 
 
 def read_video(path_to_video: str,
