@@ -206,6 +206,5 @@ def render_animation(keypoints, keypoints_metadata, poses, skeleton, fps, bitrat
         anim.save(output, dpi=80, writer='imagemagick')
     else:
         raise ValueError('Unsupported output format (only .mp4 and .gif are supported)')
-    anim.save()
     # return anim, fig, plt, lines_3d
     plt.close()
