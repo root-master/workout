@@ -81,20 +81,20 @@ def write_json_to_s3(data, bucket, key):
     )
 
 
-def run(source: str,
+def run(video_source: str,
         bucket: str = None,
-        video_path_s3: str = None,
-        path_to_video_local: str = None,
-        path_to_json: str = None,
+        video_path: str = None,
+        features_source: str = None,
+        features_path: str = None,
         frame_start: int = None,
         frame_end: int = None):
     """Runs the pose estimation pipeline in local.
     video_source: ["local", "s3"]
     """
-    if source == "s3":
-        path_to_video = get_url_video_s3(bucket, video_path_s3)
+    if video_source == "s3":
+        path_to_video = get_url_video_s3(bucket, video_path)
     else:
-        path_to_video = path_to_video_local
+        path_to_video = video_path
     start = time.time()
     list_of_frames = read_video(path_to_video, frame_start, frame_end)
     print("1. reading video. Time elapsed = ", int(time.time() - start))
@@ -113,10 +113,10 @@ def run(source: str,
     keypoints_3d = inference_3d_predictor.infer3d(keypoints_2d_normalized)
     list_of_pose_features_dict = process_to_json(list_of_pose_features_dict, keypoints_2d, keypoints_3d)
 
-    if source == "s3":
-        if path_to_json:
-            write_json_to_s3(list_of_pose_features_dict, bucket, path_to_json)
+    if features_source == "s3":
+        if features_path:
+            write_json_to_s3(list_of_pose_features_dict, bucket, features_path)
         else:
-            save_json(list_of_pose_features_dict, path_to_json)
+            save_json(list_of_pose_features_dict, features_path)
 
     return list_of_pose_features_dict
