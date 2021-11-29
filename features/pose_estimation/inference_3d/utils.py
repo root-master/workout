@@ -104,13 +104,3 @@ def world_to_camera(X, R, t):
 
 def camera_to_world(X, R, t):
     return wrap(qrot, numpy.tile(R, (*X.shape[:-1], 1)), X) + t
-
-
-# bbox_array = numpy.array([[1001.1964, 44.16782, 1319.5095, 715.56433],
-#                           [730.33655, 19.212332, 947.7073, 740.1717],
-#                           [18.052113, 52.585373, 247.1843, 726.01605],
-#                           [369.73257, 39.6811, 606.3058, 718.88055]])
-#
-# bbox_area = calculate_bbox_area(bbox_array)
-# i = index_of_largest_bbox_area(bbox_area)
-# run ml/features/pose_estimation/inference_3d/utils.py
