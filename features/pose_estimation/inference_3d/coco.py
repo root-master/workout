@@ -17,3 +17,27 @@ coco_keypoints_mapping_dict = {
     15: "left_ankle",
     16: "right_ankle"
 }
+
+videoPose3D_keypoints_index_to_joints_mapping_dict = {
+    0: "center_hip",
+    1: "left_hip",
+    2: "left_knee",
+    3: "left_ankle",
+    4: "right_hip",
+    5: "right_knee",
+    6: "right_ankle",
+    7: "mid_section",
+    8: "neck",
+    9: "nose",
+    10: "head",
+    11: "right_shoulder",
+    12: "right_elbow",
+    13: "right_hand",
+    14: "left_shoulder",
+    15: "left_elbow",
+    16: "left_hand"
+}
+
+videoPose3D_keypoints_joints_to_index_mapping_dict = {}
+for k, v in videoPose3D_keypoints_index_to_joints_mapping_dict.items():
+    videoPose3D_keypoints_joints_to_index_mapping_dict[v] = k
