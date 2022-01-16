@@ -9,7 +9,9 @@ import numpy
 
 from features.dynamics.features_defintions import (videoPose3D_keypoints_name_to_index_mapping_dict,
                                                    angle_features_definition_dict,
-                                                   Z_axis)
+                                                   Z_axis,
+                                                   custom_camera_params)
+from features.pose_estimation.inference_3d.utils import camera_to_world
 
 
 def get_vector(initial_point: List[float], terminal_point: List[float]):
@@ -67,10 +69,10 @@ def get_angle_features_from_video_keypoints_3d(keypoints_3d_list: List[List[List
     return angle_features_list
 
 
-def get_angular_velocity_from_angle_features(theta_j, theta_i):
+def get_angular_velocity_from_angle_features(theta_j: Dict[str, float], theta_i: Dict[str, float], fps=30.0):
     angular_velocities_features = {}
     for name in theta_i.keys():
-        angular_velocities_features[name] = (theta_j[name] - theta_i[name])
+        angular_velocities_features[name] = (theta_j[name] - theta_i[name]) * fps
     return angular_velocities_features
 
 
@@ -80,20 +82,29 @@ def read_json(local_path: str) -> List[Dict]:
     return pose_data_list
 
 
-def run(pose_data_path):
+def run(pose_data_path, fps=30.0, camera_to_world_view=True):
     pose_data_list = read_json(pose_data_path)
     features_list = []
     for frame_number, pose_dict in enumerate(pose_data_list):
+        pred_keypoint_3d = pose_dict["pred_keypoint_3d"]
+        pred_keypoint_3d_world = camera_to_world(numpy.array(pred_keypoint_3d),
+                                                 R=custom_camera_params["orientation"],
+                                                 t=0)
+
         features_dict = {"frame_number": frame_number,
                          "pred_keypoint_2d": pose_dict["pred_keypoint_2d"],
-                         "pred_keypoint_3d": pose_dict["pred_keypoint_3d"]}
-        features_dict["angle"] = get_angle_features_from_keypoints_3d(features_dict["pred_keypoint_3d"])
+                         "pred_keypoint_3d": pred_keypoint_3d,
+                         "pred_keypoint_3d_world_view": pred_keypoint_3d_world}
+        if camera_to_world_view:
+            features_dict["angle"] = get_angle_features_from_keypoints_3d(features_dict["pred_keypoint_3d_world_view"])
+        else:
+            features_dict["angle"] = get_angle_features_from_keypoints_3d(features_dict["pred_keypoint_3d"])
         features_list.append(features_dict)
 
     for j in range(1, len(features_list)):
         i = j - 1
         theta_i = features_list[i]["angle"]
         theta_j = features_list[j]["angle"]
-        features_list[i]["velocity"] = get_angular_velocity_from_angle_features(theta_j, theta_i)
+        features_list[i]["velocity"] = get_angular_velocity_from_angle_features(theta_j, theta_i, fps=fps)
     features_list[j]["velocity"] = features_list[i]["velocity"]
     return features_list

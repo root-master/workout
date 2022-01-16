@@ -1,4 +1,4 @@
-from features.pipeline import features_pipeline
+from features.pipeline import pose_estimation_pipeline
 
 movement_list = ["v-ups", "squat", "rowing", "push-up", "kettlebell-russian-swing", "hang-clean", "dead-lift"]
 

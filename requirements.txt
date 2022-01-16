@@ -1,0 +1,9 @@
+numpy~=1.21.4
+opencv-python~=4.5.4.58
+scikit-learn~=1.0.1
+boto3~=1.17.109
+matplotlib~=3.4.2
+torch~=1.10.0
+tqdm~=4.61.2
+detectron2~=0.6
+setuptools~=58.0.4
