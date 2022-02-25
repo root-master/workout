@@ -2,62 +2,15 @@
 Runs inference on videos from local or s3.
 """
 import json
-from typing import List, Dict
 import time
 
 import numpy
-import cv2
 import boto3
 
 from features.pose_estimation.inference_2d.inference_detectron2 import Detectron2_Predictor
 from features.pose_estimation.inference_3d.inference_VideoPose3d import VideoPose3d_coco_predictor
-
-
-def read_video(path_to_video: str,
-               frame_start: int = None,
-               frame_end: int = None) -> List[numpy.ndarray]:
-    """Reads video from a local path or a url.
-
-    Args:
-        path_to_video: A path or a url to a video.
-        frame_start: Starting frame
-        frame_end: End frame.
-
-    Returns: a list of frame images.
-    """
-    cap = cv2.VideoCapture(path_to_video)
-    counter = 0
-    list_of_frames = []
-    while cap.isOpened():
-        ret, frame = cap.read()
-        counter += 1
-        if frame_start and counter < frame_start:
-            continue
-        if frame_end and counter >= frame_end:
-            break
-        if ret:
-            list_of_frames.append(frame)
-        else:
-            break
-    cap.release()
-    return list_of_frames
-
-
-def get_url_video_s3(bucket, key):
-    s3_client = boto3.client("s3")
-    url = s3_client.generate_presigned_url("get_object",
-                                           Params={"Bucket": bucket, "Key": key},
-                                           ExpiresIn=600)  # this url will be available for 600 seconds
-    return url
-
-
-def save_json(data: List[Dict], path_to_json: str):
-    """Save data to JSON.
-    data: Output of pose estimation pipeline to save.
-    path_to_json: Path to save
-    """
-    with open(path_to_json, "w") as f:
-        json.dump(data, f, sort_keys=True, indent=4)
+from utils.s3 import get_url_video_s3, save_json
+from utils.video import read_video
 
 
 def process_to_json(list_of_pose_features_dict, keypoints_2d, keypoints_3d):
@@ -97,8 +50,8 @@ def run(video_source: str,
         path_to_video = video_path
     start = time.time()
     list_of_frames = read_video(path_to_video, frame_start, frame_end)
-    print("1. reading video. Time elapsed = ", int(time.time() - start))
-    print("length of video is ", len(list_of_frames), " frames")
+    print("1. reading utils. Time elapsed = ", int(time.time() - start))
+    print("length of utils is ", len(list_of_frames), " frames")
 
     start_2d = time.time()
     inference_2d_predictor = Detectron2_Predictor()

@@ -1,5 +1,5 @@
 """
-Module for downloading video from Youtube.
+Module for downloading utils from Youtube.
 """
 
 import os
