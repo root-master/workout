@@ -22,10 +22,10 @@ def load_json(path_to_json: str):
 def read_video(path_to_video: str,
                frame_start: int = None,
                frame_end: int = None) -> List[numpy.ndarray]:
-    """Reads video from a local path or a url.
+    """Reads utils from a local path or a url.
 
     Args:
-        path_to_video: A path or a url to a video.
+        path_to_video: A path or a url to a utils.
         frame_start: Starting frame
         frame_end: End frame.
 
@@ -85,7 +85,7 @@ lines = [[0, 1], [0, 2], [1, 3], [2, 4],
          [11, 12], [11, 13], [12, 14], [13, 15], [14, 16]]
 
 bucket = "workout-vision"
-video_path = "data/prototype/video/test_squat_jacobrafati_set_3.mov"
+video_path = "data/prototype/utils/test_squat_jacobrafati_set_3.mov"
 path_to_json = "data/prototype/features/test_squat_jacobrafati_set_3.json"
 
 video = read_video(video_path)
@@ -160,10 +160,10 @@ render_animation(keypoints, keypoints_metadata, poses, skeleton, fps, bitrate, a
 # def read_video(path_to_video: str,
 #                frame_start: int = None,
 #                frame_end: int = None) -> List[numpy.ndarray]:
-#     """Reads video from a local path or a url.
+#     """Reads utils from a local path or a url.
 #
 #     Args:
-#         path_to_video: A path or a url to a video.
+#         path_to_video: A path or a url to a utils.
 #         frame_start: Starting frame
 #         frame_end: End frame.
 #
@@ -230,10 +230,10 @@ render_animation(keypoints, keypoints_metadata, poses, skeleton, fps, bitrate, a
 #          [11, 12], [11, 13], [12, 14], [13, 15], [14, 16]]
 #
 # bucket = "workout-vision"
-# video_path_s3 = "data/workout/clean/video/Clean-Ty14ogq_Vok_1.mp4"
+# video_path_s3 = "data/workout/clean/utils/Clean-Ty14ogq_Vok_1.mp4"
 # path_to_json = "data/workout/clean/features/Clean-Ty14ogq_Vok_1.json"
 #
-# video = read_video(video_path_s3)
+# utils = read_video(video_path_s3)
 # key = path_to_json
 #
 # data = get_json_from_s3(bucket, key)
@@ -308,7 +308,7 @@ render_animation(keypoints, keypoints_metadata, poses, skeleton, fps, bitrate, a
 # left_elbow = 15
 # left_hand = 16
 #
-# # image = video[i]
+# # image = utils[i]
 # # width = data[i]["image"]["width"]
 # # height = data[i]["image"]["height"]
 # # keypoint_2d = numpy.array(data[i]["pred_keypoint_2d"])

@@ -64,8 +64,8 @@ def render_animation(keypoints, keypoints_metadata, poses, skeleton, fps, bitrat
     Render an animation. The supported output modes are:
      -- 'interactive': display an interactive figure
                        (also works on notebooks if associated with %matplotlib inline)
-     -- 'html': render the animation as HTML5 video. Can be displayed in a notebook using HTML(...).
-     -- 'filename.mp4': render and export the animation as an h264 video (requires ffmpeg).
+     -- 'html': render the animation as HTML5 utils. Can be displayed in a notebook using HTML(...).
+     -- 'filename.mp4': render and export the animation as an h264 utils (requires ffmpeg).
      -- 'filename.gif': render and export the animation a gif file (requires imagemagick).
     """
     # plt.ioff()
@@ -100,12 +100,12 @@ def render_animation(keypoints, keypoints_metadata, poses, skeleton, fps, bitrat
         trajectories.append(data[:, 0, [0, 1]])
     poses = list(poses.values())
 
-    # Decode video
+    # Decode utils
     if input_video_path is None:
         # Black background
         all_frames = np.zeros((keypoints.shape[0], viewport[1], viewport[0]), dtype='uint8')
     else:
-        # Load video using ffmpeg
+        # Load utils using ffmpeg
         all_frames = []
         for f in read_video(input_video_path, skip=input_video_skip, limit=limit):
             all_frames.append(f)

@@ -8,8 +8,8 @@ import boto3
 
 
 def get_url_video_s3(bucket, key):
-    """Returns a URL for a file stored in s3://bucket/key"""
     s3_client = boto3.client("s3")
+    """Returns a URL for a file stored in s3://bucket/key"""
     url = s3_client.generate_presigned_url("get_object",
                                            Params={"Bucket": bucket, "Key": key},
                                            ExpiresIn=3600)
@@ -26,9 +26,9 @@ def save_json(data: List[Dict], path_to_json: str):
 
 
 def write_json_to_s3(data, bucket, key):
+    s3_client = boto3.client("s3")
     """Writes a JSON data to s3://bucket/key"""
-    s3 = boto3.client("s3")
-    s3.put_object(
+    s3_client.put_object(
         Body=json.dumps(data),
         Bucket=bucket,
         Key=key

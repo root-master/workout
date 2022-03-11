@@ -8,7 +8,7 @@ for movement in movement_list:
     print(f"yc-demo/video/{video_file_name}")
     # features_pipeline.run(video_source="s3",
     #                       bucket="workout-vision",
-    #                       video_path_s3=f"yc-demo/video/{video_file_name}",
+    #                       video_path_s3=f"yc-demo/utils/{video_file_name}",
     #                       features_source="s3",
     #                       features_path=f"yc-demo/features/{video_file_name}"
     #                       )

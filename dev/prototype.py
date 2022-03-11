@@ -114,7 +114,7 @@ def count_reps(y_pred):
 
 # visualize_2d(
 #     video_name="train_squat_mGvzVjuY8SY.mp4",
-#     video_dir="data/prototype/video/",
+#     video_dir="data/prototype/utils/",
 #     output_video_name="train_squat_mGvzVjuY8SY_2d.avi",
 #     output_dir="data/prototype/output_videos/",
 #     fps=30,
@@ -123,7 +123,7 @@ def count_reps(y_pred):
 
 # visualize_2d(
 #     video_name="test_squat_jacobrafati_set_3.mov",
-#     video_dir="data/prototype/video/",
+#     video_dir="data/prototype/utils/",
 #     output_video_name="test_squat_jacobrafati_set_3_2d.avi",
 #     output_dir="data/prototype/output_videos/",
 #     pose_features_list=test_pose_features_list,
