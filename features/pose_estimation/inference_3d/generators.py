@@ -16,9 +16,9 @@ class ChunkedGenerator:
     
     Arguments:
     batch_size -- the batch size to use for training
-    cameras -- list of cameras, one element for each video (optional, used for semi-supervised training)
-    poses_3d -- list of ground-truth 3D poses, one element for each video (optional, used for supervised training)
-    poses_2d -- list of input 2D keypoints, one element for each video
+    cameras -- list of cameras, one element for each utils (optional, used for semi-supervised training)
+    poses_3d -- list of ground-truth 3D poses, one element for each utils (optional, used for supervised training)
+    poses_2d -- list of input 2D keypoints, one element for each utils
     chunk_length -- number of output frames to predict for each training example (usually 1)
     pad -- 2D input padding to compensate for valid convolutions, per side (depends on the receptive field)
     causal_shift -- asymmetric padding offset when causal convolutions are used (usually 0 or "pad")
@@ -179,9 +179,9 @@ class UnchunkedGenerator:
     the second of which is a mirrored version of the first.
     
     Arguments:
-    cameras -- list of cameras, one element for each video (optional, used for semi-supervised training)
-    poses_3d -- list of ground-truth 3D poses, one element for each video (optional, used for supervised training)
-    poses_2d -- list of input 2D keypoints, one element for each video
+    cameras -- list of cameras, one element for each utils (optional, used for semi-supervised training)
+    poses_3d -- list of ground-truth 3D poses, one element for each utils (optional, used for supervised training)
+    poses_2d -- list of input 2D keypoints, one element for each utils
     pad -- 2D input padding to compensate for valid convolutions, per side (depends on the receptive field)
     causal_shift -- asymmetric padding offset when causal convolutions are used (usually 0 or "pad")
     augment -- augment the dataset by flipping poses horizontally

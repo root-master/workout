@@ -5,8 +5,6 @@
 # LICENSE file in the root directory of this source tree.
 #
 
-# matplotlib.use('Agg')
-
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation, writers
 import numpy as np
@@ -66,11 +64,11 @@ def render_animation(keypoints, keypoints_metadata, poses, skeleton, fps, bitrat
     Render an animation. The supported output modes are:
      -- 'interactive': display an interactive figure
                        (also works on notebooks if associated with %matplotlib inline)
-     -- 'html': render the animation as HTML5 video. Can be displayed in a notebook using HTML(...).
-     -- 'filename.mp4': render and export the animation as an h264 video (requires ffmpeg).
+     -- 'html': render the animation as HTML5 utils. Can be displayed in a notebook using HTML(...).
+     -- 'filename.mp4': render and export the animation as an h264 utils (requires ffmpeg).
      -- 'filename.gif': render and export the animation a gif file (requires imagemagick).
     """
-    plt.ioff()
+    # plt.ioff()
     fig = plt.figure(figsize=(size * (1 + len(poses)), size))
     ax_in = fig.add_subplot(1, 1 + len(poses), 1)
     ax_in.get_xaxis().set_visible(False)
@@ -102,18 +100,19 @@ def render_animation(keypoints, keypoints_metadata, poses, skeleton, fps, bitrat
         trajectories.append(data[:, 0, [0, 1]])
     poses = list(poses.values())
 
-    # Decode video
+    # Decode utils
     if input_video_path is None:
         # Black background
         all_frames = np.zeros((keypoints.shape[0], viewport[1], viewport[0]), dtype='uint8')
     else:
-        # Load video using ffmpeg
+        # Load utils using ffmpeg
         all_frames = []
         for f in read_video(input_video_path, skip=input_video_skip, limit=limit):
             all_frames.append(f)
         effective_length = min(keypoints.shape[0], len(all_frames))
         all_frames = all_frames[:effective_length]
-        keypoints = keypoints[input_video_skip:]
+
+        keypoints = keypoints[input_video_skip:]  # todo remove
         for idx in range(len(poses)):
             poses[idx] = poses[idx][input_video_skip:]
 
@@ -142,7 +141,6 @@ def render_animation(keypoints, keypoints_metadata, poses, skeleton, fps, bitrat
 
     def update_video(i):
         nonlocal initialized, image, lines, points
-        global lines_3d
 
         for n, ax in enumerate(ax_3d):
             ax.set_xlim3d([-radius / 2 + trajectories[n][i, 0], radius / 2 + trajectories[n][i, 0]])
@@ -197,14 +195,15 @@ def render_animation(keypoints, keypoints_metadata, poses, skeleton, fps, bitrat
 
     fig.tight_layout()
 
-    anim = FuncAnimation(fig, update_video, frames=np.arange(0, limit), interval=1000 / fps, repeat=False)
-    if output.endswith('.mp4'):
-        Writer = writers['ffmpeg']
-        writer = Writer(fps=fps, metadata={}, bitrate=bitrate)
-        anim.save(output, writer=writer)
-    elif output.endswith('.gif'):
-        anim.save(output, dpi=80, writer='imagemagick')
-    else:
-        raise ValueError('Unsupported output format (only .mp4 and .gif are supported)')
-    # return anim, fig, plt, lines_3d
-    plt.close()
+    anim = FuncAnimation(fig, update_video, frames=np.arange(0, limit), interval=1000 / fps, repeat=True)
+    plt.show()
+    # if output.endswith('.mp4'):
+    #     Writer = writers['ffmpeg']
+    #     writer = Writer(fps=fps, metadata={}, bitrate=bitrate)
+    #     anim.save(output, writer=writer)
+    # elif output.endswith('.gif'):
+    #     anim.save(output, dpi=80, writer='imagemagick')
+    # else:
+    #     raise ValueError('Unsupported output format (only .mp4 and .gif are supported)')
+    # plt.close()
+    return anim, plt

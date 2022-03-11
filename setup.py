@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 from features.__init__ import __version__
 
-package_dir = {"workout": "workout"},
+package_dir = {"features": "features"},
 setup(
     name="workout",
     version=__version__,

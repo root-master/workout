@@ -61,44 +61,44 @@ for k, v in videoPose3D_keypoints_index_to_name_mapping_dict.items():
 angle_features_definition_list = [
     [("left_knee", "left_hip"), ("left_ankle", "left_knee")],
     [("right_knee", "right_hip"), ("right_ankle", "right_knee")],
-    # [("left_hip", "left_shoulder"), ("left_knee", "left_hip")],
-    # [("right_hip", "right_shoulder"), ("right_knee", "right_hip")],
-    #
-    # [("left_shoulder", "left_elbow"), ("left_elbow", "left_wrist")],
-    # [("right_shoulder", "right_elbow"), ("right_elbow", "right_wrist")],
-    # [("left_shoulder", "left_elbow"), ("left_shoulder", "left_hip")],
-    # [("right_shoulder", "right_elbow"), ("right_shoulder", "right_hip")],
-    # [("left_shoulder", "left_elbow"), ("left_shoulder", "left_hip")],
-    # [("right_shoulder", "right_elbow"), ("right_shoulder", "right_hip")],
-    # [("left_shoulder", "left_wrist"), ("left_shoulder", "right_shoulder")],
-    # [("right_shoulder", "right_wrist"), ("right_shoulder", "left_shoulder")],
-    #
-    # [("neck", "head"), ("right_shoulder", "left_shoulder")],
-    # [("neck", "head"), ("center_hip", "mid_section")],
-    # [("neck", "nose"), ("right_shoulder", "left_shoulder")],
-    # [("center_hip", "mid_section"), ("right_hip", "left_hip")],
-    #
-    # [("right_hip", "right_knee"), ("left_hip", "left_knee")],
-    # [("right_shoulder", "left_shoulder"), ("right_hip", "left_hip")],
-    # [("right_shoulder", "left_shoulder"), ("right_knee", "left_knee")],
-    # [("right_shoulder", "left_shoulder"), ("right_ankle", "left_ankle")],
-    # [("right_hip", "left_hip"), ("right_knee", "left_knee")],
-    # [("right_hip", "left_hip"), ("right_ankle", "left_ankle")],
-    # [("right_wrist", "left_wrist"), ("right_hip", "left_hip")],
-    #
-    # [("left_ankle", "left_knee"), "Z_axis"],
-    # [("right_ankle", "right_knee"), "Z_axis"],
-    # [("left_knee", "left_hip"), "Z_axis"],
-    # [("right_knee", "right_hip"), "Z_axis"],
-    # [("left_hip", "left_shoulder"), "Z_axis"],
-    # [("right_hip", "right_shoulder"), "Z_axis"],
-    # [("left_knee", "left_shoulder"), "Z_axis"],
-    # [("right_knee", "right_shoulder"), "Z_axis"],
-    # [("left_ankle", "left_shoulder"), "Z_axis"],
-    # [("right_ankle", "right_shoulder"), "Z_axis"],
-    # [("center_hip", "mid_section"), "Z_axis"],
-    # [("neck", "head"), "Z_axis"],
-    # [("neck", "nose"), "Z_axis"],
+    [("left_hip", "left_shoulder"), ("left_knee", "left_hip")],
+    [("right_hip", "right_shoulder"), ("right_knee", "right_hip")],
+    [("left_shoulder", "left_elbow"), ("left_elbow", "left_wrist")],
+    [("right_shoulder", "right_elbow"), ("right_elbow", "right_wrist")],
+    [("left_shoulder", "left_elbow"), ("left_shoulder", "left_hip")],
+    [("right_shoulder", "right_elbow"), ("right_shoulder", "right_hip")],
+    [("left_shoulder", "left_elbow"), ("left_shoulder", "left_hip")],
+    [("right_shoulder", "right_elbow"), ("right_shoulder", "right_hip")],
+    [("left_shoulder", "left_wrist"), ("left_shoulder", "right_shoulder")],
+    [("right_shoulder", "right_wrist"), ("right_shoulder", "left_shoulder")],
+    [("neck", "head"), ("right_shoulder", "left_shoulder")],
+    [("neck", "head"), ("center_hip", "mid_section")],
+    [("neck", "nose"), ("right_shoulder", "left_shoulder")],
+    [("center_hip", "mid_section"), ("right_hip", "left_hip")],
+    [("center_hip", "neck"), ("left_knee", "left_hip")],
+    [("center_hip", "neck"), ("right_knee", "right_hip")],
+    [("right_hip", "right_knee"), ("left_hip", "left_knee")],
+    [("right_shoulder", "left_shoulder"), ("right_hip", "left_hip")],
+    [("right_shoulder", "left_shoulder"), ("right_knee", "left_knee")],
+    [("right_shoulder", "left_shoulder"), ("right_ankle", "left_ankle")],
+    [("right_hip", "left_hip"), ("right_knee", "left_knee")],
+    [("right_hip", "left_hip"), ("right_ankle", "left_ankle")],
+    [("right_wrist", "left_wrist"), ("right_hip", "left_hip")],
+    [("left_ankle", "left_knee"), "Z_axis"],
+    [("right_ankle", "right_knee"), "Z_axis"],
+    [("left_knee", "left_hip"), "Z_axis"],
+    [("right_knee", "right_hip"), "Z_axis"],
+    [("left_hip", "left_shoulder"), "Z_axis"],
+    [("right_hip", "right_shoulder"), "Z_axis"],
+    [("left_knee", "left_shoulder"), "Z_axis"],
+    [("right_knee", "right_shoulder"), "Z_axis"],
+    [("left_ankle", "left_shoulder"), "Z_axis"],
+    [("right_ankle", "right_shoulder"), "Z_axis"],
+    [("center_hip", "mid_section"), "Z_axis"],
+    [("mid_section", "neck"), "Z_axis"],
+    [("center_hip", "neck"), "Z_axis"],
+    [("neck", "head"), "Z_axis"],
+    [("neck", "nose"), "Z_axis"],
 ]
 
 angle_features_name_list = []
@@ -120,8 +120,32 @@ for index, vector_list in enumerate(angle_features_definition_list):
 
 X_axis = [1, 0, 0]
 Y_axis = [0, 1, 0]
-Z_axis = [0, -1, 0]
+Z_axis = [0, 0, 1]
+
+minus_X_axis = [-1, 0, 0]
+minus_Y_axis = [0, -1, 0]
+minus_Z_axis = [0, 0, -1]
+
+distance_features_list = [
+    ("left_ankle", "right_ankle"),
+    ("left_knee", "right_knee"),
+    ("left-hip", "right-hip"),
+    ("left-hip", "left-ankle"),
+    ("right-hip", "right-ankle"),
+    ("left-shoulder", "left-ankle"),
+    ("right-shoulder", "right-ankle"),
+    ("left_shoulder", "right_shoulder"),
+    ("head", "left_ankle"),
+    ("head", "right_ankle")
+]
 
 relative_distance_features_list = [
-    [("left_ankle", "right_ankle"), ("left_shoulder", "right_shoulder")]
+    [("left_ankle", "right_ankle"), ("left_shoulder", "right_shoulder"),
+     ("left_knee", "right_knee"), ("left_ankle", "right_ankle"),
+     ("left_knee", "right_knee"), ("left_shoulder", "right_shoulder")],
 ]
+
+custom_camera_params = {
+    "orientation": [0.1407056450843811, -0.1500701755285263, -0.755240797996521, 0.6223280429840088],
+    "translation": [1841.1070556640625, 4955.28466796875, 1563.4454345703125],
+}

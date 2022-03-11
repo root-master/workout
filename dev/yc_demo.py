@@ -1,4 +1,4 @@
-from features.pipeline import features_pipeline
+from features.pipeline import pose_estimation_pipeline
 
 movement_list = ["v-ups", "squat", "rowing", "push-up", "kettlebell-russian-swing", "hang-clean", "dead-lift"]
 
@@ -8,7 +8,7 @@ for movement in movement_list:
     print(f"yc-demo/video/{video_file_name}")
     # features_pipeline.run(video_source="s3",
     #                       bucket="workout-vision",
-    #                       video_path_s3=f"yc-demo/video/{video_file_name}",
+    #                       video_path_s3=f"yc-demo/utils/{video_file_name}",
     #                       features_source="s3",
     #                       features_path=f"yc-demo/features/{video_file_name}"
     #                       )
