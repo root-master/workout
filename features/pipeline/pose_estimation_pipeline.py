@@ -10,7 +10,7 @@ import boto3
 from features.pose_estimation.inference_2d.inference_detectron2 import Detectron2_Predictor
 from features.pose_estimation.inference_3d.inference_VideoPose3d import VideoPose3d_coco_predictor
 from utils.s3 import get_url_video_s3, save_json
-from utils.video import read_video
+from utils.video import read
 
 
 def process_to_json(list_of_pose_features_dict, keypoints_2d, keypoints_3d):
@@ -35,9 +35,11 @@ def write_json_to_s3(data, bucket, key):
 
 
 def run(video_source: str,
-        bucket: str = None,
-        video_path: str = None,
+        s3_bucket: str = None,
+        s3_video_key: str = None,
+        video_local_path: str = None,
         features_source: str = None,
+        s3_features_key: str = None,
         features_path: str = None,
         frame_start: int = None,
         frame_end: int = None):
@@ -45,12 +47,14 @@ def run(video_source: str,
     video_source: ["local", "s3"]
     """
     if video_source == "s3":
-        path_to_video = get_url_video_s3(bucket, video_path)
+        path_to_video = get_url_video_s3(s3_bucket, s3_video_key)
+    elif video_source == "local":  # local
+        path_to_video = video_local_path
     else:
-        path_to_video = video_path
+        raise KeyError
     start = time.time()
-    list_of_frames = read_video(path_to_video, frame_start, frame_end)
-    print("1. reading utils. Time elapsed = ", int(time.time() - start))
+    list_of_frames = read(path_to_video, frame_start, frame_end)
+    print("1. reading video frames. Time elapsed = ", int(time.time() - start))
     print("length of utils is ", len(list_of_frames), " frames")
 
     start_2d = time.time()
@@ -62,14 +66,16 @@ def run(video_source: str,
     inference_3d_predictor = VideoPose3d_coco_predictor()
     keypoints_2d, keypoints_2d_normalized = \
         inference_3d_predictor.extract_keypoints_from_detectron2_output(list_of_pose_features_dict)
-    print("3. running 3d pose estimation on frames. Time elapsed = ", int(time.time() - start_3d))
+    print("3. running 3d pose estimation on 2D Keypoints. Time elapsed = ", int(time.time() - start_3d))
     keypoints_3d = inference_3d_predictor.infer3d(keypoints_2d_normalized)
+
     list_of_pose_features_dict = process_to_json(list_of_pose_features_dict, keypoints_2d, keypoints_3d)
 
     if features_source == "s3":
-        if features_path:
-            write_json_to_s3(list_of_pose_features_dict, bucket, features_path)
-        else:
-            save_json(list_of_pose_features_dict, features_path)
+        write_json_to_s3(list_of_pose_features_dict, s3_bucket, s3_features_key)
+    elif features_source == "local":
+        save_json(list_of_pose_features_dict, features_path)
+    else:
+        raise KeyError
 
     return list_of_pose_features_dict
