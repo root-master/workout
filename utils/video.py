@@ -8,9 +8,9 @@ import numpy
 import cv2
 
 
-def read_video(path_to_video: str,
-               frame_start: int = None,
-               frame_end: int = None) -> List[numpy.ndarray]:
+def read(path_to_video: str,
+         frame_start: int = None,
+         frame_end: int = None) -> List[numpy.ndarray]:
     """Reads a video frames from a local path or a URL.
 
     Args:
@@ -36,3 +36,23 @@ def read_video(path_to_video: str,
             break
     cap.release()
     return list_of_frames
+
+
+def write(list_of_frames: List[numpy.ndarray],
+          path_to_video: str,
+          width: int,
+          height: int,
+          fps: int = 30,
+          frame_start: int = None,
+          frame_end: int = None):
+    out = cv2.VideoWriter(path_to_video,
+                          cv2.VideoWriter_fourcc("M", "J", "P", "G"),
+                          fps,
+                          (width, height))
+    for i, frame in enumerate(list_of_frames):
+        if frame_start and i < frame_start:
+            continue
+        if frame_end and i > frame_end:
+            break
+        out.write(frame)
+    out.release()
