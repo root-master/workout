@@ -21,8 +21,8 @@ def extract_pose_features():
     for video_name in video_name_list:
         feature_file_name = video_name[:-4] + ".json"
         pose_estimation_pipeline.run(video_source="local",
-                                     bucket="workout-vision",
-                                     video_path=f"./data/prototype/video/{video_name}",
+                                     s3_bucket="workout-vision",
+                                     s3_video_key=f"./data/prototype/video/{video_name}",
                                      features_source="s3",
                                      features_path=f"prototype/features/{feature_file_name}"
                                      )
@@ -32,7 +32,7 @@ def visualize_2d(video_name, video_dir, output_video_name,
                  output_dir, pose_features_list, fps,
                  color=(0, 255, 0), thickness=8):
     video_path = os.path.join(video_dir, video_name)
-    video = pose_estimation_pipeline.read_video(video_path)
+    video = pose_estimation_pipeline.read(video_path)
     output_video_path = os.path.join(output_dir, output_video_name)
     frame_width = pose_features_list[0]["image"]["width"]
     frame_height = pose_features_list[0]["image"]["height"]

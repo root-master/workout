@@ -141,3 +141,5 @@ detectron2/
 features/detectron2/
 checkpoints/
 *.ipynb
+
+dev/
