@@ -83,7 +83,7 @@ class Detectron2_Predictor:
         v = Visualizer(image[:, :, ::-1], MetadataCatalog.get(self.cfg.DATASETS.TRAIN[0]), scale=1.2)
         out = v.draw_instance_predictions(output["instances"].to("cpu"))
         if write:
-            result_file = result_file if result_file else "data/test_images/test_output.jpg"
+            result_file = result_file if result_file else "test_data/test_images/test_output.jpg"
             cv2.imwrite(result_file, out.get_image()[:, :, ::-1])
         if show:
             cv2.imshow("show", out.get_image()[:, :, ::-1])
