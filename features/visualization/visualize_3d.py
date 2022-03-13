@@ -17,15 +17,15 @@ videoPose3D_skeleton = [
 
 
 def visualize_one_frame_3d(frame_number, features_list, world_view=True):
-    pred_keypoint_3d = features_list[frame_number]["pred_keypoint_3d"]
-    pred_keypoint_3d = numpy.array(pred_keypoint_3d)
+    pred_keypoints_3d = features_list[frame_number]["pred_keypoints_3d"]
+    pred_keypoints_3d = numpy.array(pred_keypoints_3d)
     rot = custom_camera_params["orientation"]
-    pred_keypoint_3d_world = camera_to_world(pred_keypoint_3d, R=rot, t=0)
-    pred_keypoint_3d_world[:, 2] -= numpy.min(pred_keypoint_3d_world[:, 2], axis=0, keepdims=True)
+    pred_keypoints_3d_world = camera_to_world(pred_keypoints_3d, R=rot, t=0)
+    pred_keypoints_3d_world[:, 2] -= numpy.min(pred_keypoints_3d_world[:, 2], axis=0, keepdims=True)
     if world_view:
-        kp3d = pred_keypoint_3d_world
+        kp3d = pred_keypoints_3d_world
     else:
-        kp3d = pred_keypoint_3d
+        kp3d = pred_keypoints_3d
     xs = kp3d[:, 0]
     ys = kp3d[:, 1]
     zs = kp3d[:, 2]
@@ -54,13 +54,13 @@ def visualize_one_frame_3d(frame_number, features_list, world_view=True):
 
 
 def update_3d_pose(frame_number, lines, points, features_list):
-    pred_keypoint_3d = features_list[frame_number]["pred_keypoint_3d"]
-    pred_keypoint_3d = numpy.array(pred_keypoint_3d)
+    pred_keypoints_3d = features_list[frame_number]["pred_keypoints_3d"]
+    pred_keypoints_3d = numpy.array(pred_keypoints_3d)
     rot = custom_camera_params["orientation"]
-    pred_keypoint_3d_world = camera_to_world(pred_keypoint_3d, R=rot, t=0)
-    pred_keypoint_3d_world[:, 2] -= numpy.min(pred_keypoint_3d_world[:, 2], axis=0, keepdims=True)
+    pred_keypoints_3d_world = camera_to_world(pred_keypoints_3d, R=rot, t=0)
+    pred_keypoints_3d_world[:, 2] -= numpy.min(pred_keypoints_3d_world[:, 2], axis=0, keepdims=True)
 
-    kp3d = pred_keypoint_3d_world
+    kp3d = pred_keypoints_3d_world
 
     xs = kp3d[:, 0]
     ys = kp3d[:, 1]
@@ -99,13 +99,13 @@ def animate(features_list, fps=30):
 
     lines = []
 
-    pred_keypoint_3d = features_list[0]["pred_keypoint_3d"]
-    pred_keypoint_3d = numpy.array(pred_keypoint_3d)
+    pred_keypoints_3d = features_list[0]["pred_keypoints_3d"]
+    pred_keypoints_3d = numpy.array(pred_keypoints_3d)
     rot = custom_camera_params["orientation"]
-    pred_keypoint_3d_world = camera_to_world(pred_keypoint_3d, R=rot, t=0)
-    pred_keypoint_3d_world[:, 2] -= numpy.min(pred_keypoint_3d_world[:, 2], axis=0, keepdims=True)
+    pred_keypoints_3d_world = camera_to_world(pred_keypoints_3d, R=rot, t=0)
+    pred_keypoints_3d_world[:, 2] -= numpy.min(pred_keypoints_3d_world[:, 2], axis=0, keepdims=True)
 
-    kp3d = pred_keypoint_3d_world
+    kp3d = pred_keypoints_3d_world
     xs = kp3d[:, 0]
     ys = kp3d[:, 1]
     zs = kp3d[:, 2]

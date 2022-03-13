@@ -46,13 +46,14 @@ def write(list_of_frames: List[numpy.ndarray],
           frame_start: int = None,
           frame_end: int = None):
     out = cv2.VideoWriter(path_to_video,
-                          cv2.VideoWriter_fourcc("M", "J", "P", "G"),
+                          cv2.VideoWriter_fourcc('m', 'p', '4', 'v'),
                           fps,
                           (width, height))
     for i, frame in enumerate(list_of_frames):
         if frame_start and i < frame_start:
             continue
         if frame_end and i > frame_end:
-            break
+            continue
+        print("added frame:", i)
         out.write(frame)
     out.release()

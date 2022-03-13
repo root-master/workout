@@ -85,8 +85,8 @@ lines = [[0, 1], [0, 2], [1, 3], [2, 4],
          [11, 12], [11, 13], [12, 14], [13, 15], [14, 16]]
 
 bucket = "workout-vision"
-video_path = "data/prototype/utils/test_squat_jacobrafati_set_3.mov"
-path_to_json = "data/prototype/features/test_squat_jacobrafati_set_3.json"
+video_path = "test_data/prototype/utils/test_squat_jacobrafati_set_3.mov"
+path_to_json = "test_data/prototype/features/test_squat_jacobrafati_set_3.json"
 
 video = read_video(video_path)
 data = load_json(path_to_json)
@@ -127,7 +127,7 @@ skeleton = Skeleton(parents=numpy.array([-1, 0, 1, 2, 0, 4, 5, 0, 7, 8, 9, 8, 11
 fps = 30
 bitrate = 3000
 azim = custom_camera_params['azimuth']
-output = "data/prototype/output_videos/test_squat_jacobrafati_set_3_3d.mp4"
+output = "test_data/prototype/output_videos/test_squat_jacobrafati_set_3_3d.mp4"
 viewport = (custom_camera_params['res_w'], custom_camera_params['res_h'])
 input_video_path = video_path
 
@@ -153,8 +153,8 @@ render_animation(keypoints, keypoints_metadata, poses, skeleton, fps, bitrate, a
 #
 # def load_json(path_to_json: str):
 #     with open(path_to_json) as f:
-#         data = json.load(f)
-#     return data
+#         test_data = json.load(f)
+#     return test_data
 #
 #
 # def read_video(path_to_video: str,
@@ -190,8 +190,8 @@ render_animation(keypoints, keypoints_metadata, poses, skeleton, fps, bitrate, a
 # def get_json_from_s3(bucket, key):
 #     s3 = boto3.resource('s3')
 #     obj = s3.Object(bucket, key)
-#     data = json.load(obj.get()['Body'])
-#     return data
+#     test_data = json.load(obj.get()['Body'])
+#     return test_data
 #
 #
 # custom_camera_params = {
@@ -230,34 +230,34 @@ render_animation(keypoints, keypoints_metadata, poses, skeleton, fps, bitrate, a
 #          [11, 12], [11, 13], [12, 14], [13, 15], [14, 16]]
 #
 # bucket = "workout-vision"
-# video_path_s3 = "data/workout/clean/utils/Clean-Ty14ogq_Vok_1.mp4"
-# path_to_json = "data/workout/clean/features/Clean-Ty14ogq_Vok_1.json"
+# video_path_s3 = "test_data/workout/clean/utils/Clean-Ty14ogq_Vok_1.mp4"
+# path_to_json = "test_data/workout/clean/features/Clean-Ty14ogq_Vok_1.json"
 #
 # utils = read_video(video_path_s3)
 # key = path_to_json
 #
-# data = get_json_from_s3(bucket, key)
+# test_data = get_json_from_s3(bucket, key)
 #
-# # for d in data:
+# # for d in test_data:
 # #     for key in d.keys():
 # #         if "pred" in key:
 # #             d[key] = numpy.array(d[key])
 #
-# # data_3d_videopose3d = numpy.load("data/workout/squat/features/features_3d_from_1612153353.520448_to_1612153358.573516.npz.npy")
-# # data_pp_past = numpy.load("data/workout/squat/features/features_2d_pp_from_1612153353.520448_to_1612153358.573516.npz")
+# # data_3d_videopose3d = numpy.load("test_data/workout/squat/features/features_3d_from_1612153353.520448_to_1612153358.573516.npz.npy")
+# # data_pp_past = numpy.load("test_data/workout/squat/features/features_2d_pp_from_1612153353.520448_to_1612153358.573516.npz")
 #
-# keypoint_2d_all = numpy.zeros((len(data), 17, 2))
-# keypoint_3d_all = numpy.zeros((len(data), 17, 3))
+# keypoint_2d_all = numpy.zeros((len(test_data), 17, 2))
+# keypoint_3d_all = numpy.zeros((len(test_data), 17, 3))
 #
-# width = data[0]["image"]["width"]
-# height = data[0]["image"]["height"]
+# width = test_data[0]["image"]["width"]
+# height = test_data[0]["image"]["height"]
 #
 # custom_camera_params['res_w'] = width
 # custom_camera_params['res_h'] = height
 #
-# for i, image in enumerate(data):
-#     keypoint_2d = numpy.array(data[i]["pred_keypoint_2d"])
-#     keypoint_3d = numpy.array(data[i]["pred_keypoint_3d"])
+# for i, image in enumerate(test_data):
+#     keypoint_2d = numpy.array(test_data[i]["pred_keypoint_2d"])
+#     keypoint_3d = numpy.array(test_data[i]["pred_keypoint_3d"])
 #     keypoint_2d_all[i, :, :] = keypoint_2d
 #     keypoint_3d_all[i, :, :] = keypoint_3d
 #
@@ -282,7 +282,7 @@ render_animation(keypoints, keypoints_metadata, poses, skeleton, fps, bitrate, a
 # fps = 30
 # bitrate = 3000
 # azim = custom_camera_params['azimuth']
-# output = "data/workout/clean/output/Clean-Ty14ogq_Vok_1.mp4"
+# output = "test_data/workout/clean/output/Clean-Ty14ogq_Vok_1.mp4"
 # viewport = (custom_camera_params['res_w'], custom_camera_params['res_h'])
 # input_video_path = video_path_s3
 #
@@ -309,9 +309,9 @@ render_animation(keypoints, keypoints_metadata, poses, skeleton, fps, bitrate, a
 # left_hand = 16
 #
 # # image = utils[i]
-# # width = data[i]["image"]["width"]
-# # height = data[i]["image"]["height"]
-# # keypoint_2d = numpy.array(data[i]["pred_keypoint_2d"])
+# # width = test_data[i]["image"]["width"]
+# # height = test_data[i]["image"]["height"]
+# # keypoint_2d = numpy.array(test_data[i]["pred_keypoint_2d"])
 #
 # # import matplotlib.pyplot as plt
 # #
@@ -328,7 +328,7 @@ render_animation(keypoints, keypoints_metadata, poses, skeleton, fps, bitrate, a
 # #
 #
 # # i = 50
-# # keypoint_3d = numpy.array(data[i]["pred_keypoint_3d"])
+# # keypoint_3d = numpy.array(test_data[i]["pred_keypoint_3d"])
 # # rot = custom_camera_params["orientation"]
 # # prediction_rot = camera_to_world(keypoint_3d, R=rot, t=0)
 # # prediction_rot[:, 2] -= numpy.min(keypoint_3d[:, 2])

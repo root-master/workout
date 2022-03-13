@@ -1,5 +1,5 @@
 # conda environment for pose estimation tools
-name: workout
+name: detectron2
 
 channels:
   - anaconda
@@ -13,6 +13,7 @@ dependencies:
   - pycodestyle
   - libgcc>=4.8.5
   - opencv
+  - boto3
   - pip:
       - scipy
       - pyyaml

@@ -41,3 +41,8 @@ videoPose3D_keypoints_index_to_joints_mapping_dict = {
 videoPose3D_keypoints_joints_to_index_mapping_dict = {}
 for k, v in videoPose3D_keypoints_index_to_joints_mapping_dict.items():
     videoPose3D_keypoints_joints_to_index_mapping_dict[v] = k
+
+custom_camera_params = {
+    "orientation": [0.1407056450843811, -0.1500701755285263, -0.755240797996521, 0.6223280429840088],
+    "translation": [1841.1070556640625, 4955.28466796875, 1563.4454345703125],
+}

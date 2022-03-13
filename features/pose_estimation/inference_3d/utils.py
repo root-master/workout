@@ -81,8 +81,8 @@ def qrot(q, v):
     assert q.shape[:-1] == v.shape[:-1]
 
     qvec = q[..., 1:]
-    uv = torch.cross(qvec, v, dim=len(q.shape) - 1)
-    uuv = torch.cross(qvec, uv, dim=len(q.shape) - 1)
+    uv = numpy.cross(qvec, v)
+    uuv = numpy.cross(qvec, uv)
     return (v + 2 * (q[..., :1] * uv + uuv))
 
 

@@ -11,7 +11,7 @@ import numpy as np
 
 class ChunkedGenerator:
     """
-    Batched data generator, used for training.
+    Batched test_data generator, used for training.
     The sequences are split into equal-length chunks and padded as necessary.
     
     Arguments:
