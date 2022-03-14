@@ -14,6 +14,7 @@ dependencies:
   - libgcc>=4.8.5
   - opencv
   - boto3
+  - flask
   - pip:
       - scipy
       - pyyaml
