@@ -105,7 +105,7 @@ celerybeat.pid
 *.sage.py
 
 # Environments
-.env
+features/server/.flaskenv
 .venv
 env/
 venv/
@@ -145,3 +145,5 @@ checkpoints/
 
 dev/
 dev/*
+
+features/server/.flaskenv  # dev system vars
