@@ -1,51 +1,39 @@
 clean:
 	echo "clean"
 
-create_environment:
-	conda env create --file environment.yml
+install_virtualenv:
+	python3 -m pip install --user virtualenv
 
-update_environment:
-	conda env update --file environment.yml --prune
+create_venv:
+	virtualenv .penv
 
-activte_environment:
-	conda activate detectron2
+activate_venv:
+	source .penv/bin/activate
 
-install_torch_cpu:
-	# conda install pytorch==1.8.0 torchvision==0.9.0 torchaudio==0.8.0 -c pytorch
-	 pip3 install torch==1.9.0 torchvision==0.10.0 torchaudio==0.9.0
-
-install_torch_gpu:
-	# conda install pytorch torchvision torchaudio cudatoolkit=10.2 -c pytorch
-	pip3 install torch==1.9.0 torchvision==0.10.0 torchaudio==0.9.0
+install_requirements:
+	pip3 install -r requirements.txt
 
 install_detectron2:
-	python -m pip install 'git+https://github.com/facebookresearch/detectron2.git'
+	python3 -m pip install 'git+https://github.com/facebookresearch/detectron2.git'
 
 download_checkpoints:
 	mkdir checkpoints && \
-	cd checkpoints && \
-	curl https://dl.fbaipublicfiles.com/detectron2/COCO-Keypoints/keypoint_rcnn_R_101_FPN_3x/138363331/model_final_997cc7.pkl -o model_final_997cc7.pkl
+	curl https://dl.fbaipublicfiles.com/detectron2/COCO-Keypoints/keypoint_rcnn_R_101_FPN_3x/138363331/model_final_997cc7.pkl -o checkpoints/model_final_997cc7.pkl
+
 build_wheel:
-	python setup.py bdist_wheel
+	python3 setup.py bdist_wheel
 
 build_egg:
-	python setup.py bdist_egg
+	python3 setup.py bdist_egg
 
-install:
-	pip install -e .
-
-install_cpu:
-	make update_environment && \
-	make install_torch_cpu && \
+build:
+	make create_venv && \
+	make install_requirements && \
 	make install_detectron2 && \
 	make download_checkpoints
 
-install_gpu:
-	make update_environment && \
-	make install_torch_gpu && \
-	make install_detectron2 && \
-	make download_checkpoints && \
-	make install
+install:
+	pip3 install -e .
 
 test:
 	pytest tests/
@@ -53,12 +41,6 @@ test:
 pylint:
 	pylint --rcfile=pylintrc features && \
 	python -m pycodestyle --max-line-length=120 features --config pycodestyle
-
-build_cpu:
-	make clean pylint install_cpu build_wheel build_egg
-
-build_gpu:
-	make clean pylint install_gpu build_wheel build_egg
 
 .EXPORT_ALL_VARIABLES:
 	export FLASK_RUN_PORT=5002 && \
@@ -75,7 +57,7 @@ run_celery_server:
 run_features_flask_server:
 	flask run
 
-run_all:
+run_all_servers_for_flask_server:
 	make run_redis_server &
 	make run_features_flask_server &
 	make run_celery_server
