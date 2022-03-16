@@ -147,3 +147,6 @@ dev/
 dev/*
 
 features/server/.flaskenv  # dev system vars
+
+*.rdb
+redis-stable/

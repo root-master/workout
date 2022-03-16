@@ -16,6 +16,7 @@ dependencies:
   - boto3
   - flask
   - flask_cors
+  - redis
   - pip:
       - scipy
       - pyyaml

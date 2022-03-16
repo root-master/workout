@@ -63,8 +63,21 @@ build_gpu:
 .EXPORT_ALL_VARIABLES:
 	export FLASK_RUN_PORT=5002 && \
 	export FLASK_RUN_HOST="0.0.0.0" && \
-	export FLASK_ENV="production"
+	export FLASK_ENV="production" && \
+	export FLASK_APP="features/server/app.py"
+
+run_redis_server:
+	source "./source/redis.sh"
+
+run_celery_server:
+	celery -A features.server.app.celery worker --loglevel=info
 
 run_features_flask_server:
 	flask run
+
+run_all:
+	make run_redis_server &
+	make run_features_flask_server &
+	make run_celery_server
+
 

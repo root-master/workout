@@ -8,3 +8,6 @@ tqdm~=4.61.2
 detectron2~=0.6
 setuptools~=58.0.4
 flask~=2.0.2
+flask_cors
+celery
+redis
