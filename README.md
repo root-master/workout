@@ -44,3 +44,13 @@ export FLASK_APP="features/server/app.py"
 flask run
 ```
 
+## EC2 Issues
+```bash
+sudo rm /var/lib/dpkg/lock
+sudo lsof /var/lib/dpkg/lock
+sudo kill -9 PID
+
+sudo dpkg --configure -a
+sudo apt install
+```
+
