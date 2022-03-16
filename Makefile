@@ -68,3 +68,8 @@ build_gpu:
 run_features_flask_server:
 	flask run
 
+run_celery_server:
+	celery -A features.server.app.celery worker --loglevel=info
+
+run_redis:
+	source source "./source/redis.sh"
