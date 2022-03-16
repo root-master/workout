@@ -76,8 +76,6 @@ run_features_flask_server:
 	flask run
 
 run_all:
-	make run_redis_server &
-	make run_features_flask_server &
-	make run_celery_server
+	make -j4 run_redis_server run_celery_server run_features_flask_server
 
 
