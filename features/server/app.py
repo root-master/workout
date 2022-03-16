@@ -1,10 +1,11 @@
 from flask import Flask
 from flask import request
-import threading
+from flask_cors import CORS
 
 from features.pipeline import features_pipeline
 
 app = Flask(__name__)
+CORS(app)
 
 
 @app.route("/", methods=["GET", "POST", "DELETE"])
@@ -12,17 +13,19 @@ def yo():
     return "YO! THIS IS A MESSAGE FROM WORKOUT VISION ML FEATURES SERVER. LOVE YOURSELF!"
 
 
-@app.route("/user_features", methods=["POST"])
+@app.route("/user_features", methods=["POST", "GET"], strict_slashes=False)
 def user_features():
     if request.method == "POST":
         try:
+            print(request)
             request_data = request.get_json()
+            print(request_data)
             # video_source = request_data["user_video"]["source"]
             video_source = "s3"
             s3_bucket = request_data["user_video"]["bucket"]
             s3_video_key = request_data["user_video"]["key"]
             features_source = "s3"
-            user_nickname = request_data["user"]["sub"]
+            user_nickname = request_data["user"]["nickname"]
             time_stamp_start = request_data["timestamp_start"]
             time_stamp_end = request_data["timestamp_end"]
             s3_features_key = """user_features/{}/{}_{}.json""".format(user_nickname,
@@ -39,10 +42,8 @@ def user_features():
         except Exception as e:
             return "ERROR: " + str(e)
 
-
-@app.errorhandler(404)
-def page_not_found():
-    return "PAGE NOT FOUND -- 404"
+    if request.method == "GET":
+        return "YO! THIS IS A MESSAGE FROM /USER_FEATURES GET"
 
 
 if __name__ == "__main__":
