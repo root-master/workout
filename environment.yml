@@ -15,6 +15,7 @@ dependencies:
   - opencv
   - boto3
   - flask
+  - flask_cors
   - pip:
       - scipy
       - pyyaml
