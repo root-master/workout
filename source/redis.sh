@@ -7,4 +7,4 @@ fi
 cd redis-stable
 make
 cd ..
-redis-stable/src/redis-server
+#redis-stable/src/redis-server
