@@ -42,19 +42,18 @@ pylint:
 	pylint --rcfile=pylintrc features && \
 	python -m pycodestyle --max-line-length=120 features --config pycodestyle
 
-.EXPORT_ALL_VARIABLES:
-	export FLASK_RUN_PORT=5002 && \
-	export FLASK_RUN_HOST="0.0.0.0" && \
-	export FLASK_ENV="production" && \
-	export FLASK_APP="features/server/app.py"
+install_redis_server:
+	source "./source/redis.sh"
 
 run_redis_server:
-	source "./source/redis.sh"
+	make install_redis_server && \
+	redis-stable/src/redis-server
 
 run_celery_server:
 	celery -A features.server.app.celery worker --loglevel=info
 
 run_features_flask_server:
+	source "./source/environment_variables.sh" && \
 	flask run
 
 run_all_servers_for_flask_server:

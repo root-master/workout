@@ -33,7 +33,7 @@ pip3 install -r requirements.txt
 ####### Install DETECTRON2
 ```bash
 source .penv/bin/activate
-python -m pip install 'git+https://github.com/facebookresearch/detectron2.git'
+python3 -m pip install 'git+https://github.com/facebookresearch/detectron2.git'
 ```
 
 ###### INSTALL REDIS SERVER

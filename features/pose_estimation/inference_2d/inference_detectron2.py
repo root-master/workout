@@ -28,7 +28,9 @@ def get_config():
     cfg = get_cfg()
     cfg.merge_from_file(model_zoo.get_config_file("COCO-Keypoints/keypoint_rcnn_R_101_FPN_3x.yaml"))
     cfg.MODEL.ROI_HEADS.SCORE_THRESH_TEST = 0.7
-    cfg.MODEL.WEIGHTS = model_zoo.get_checkpoint_url("COCO-Keypoints/keypoint_rcnn_R_101_FPN_3x.yaml")
+    # cfg.MODEL.WEIGHTS = model_zoo.get_checkpoint_url("COCO-Keypoints/keypoint_rcnn_R_101_FPN_3x.yaml")
+    cfg.MODEL.WEIGHTS = "checkpoints/model_final_997cc7.pkl"
+
     if torch.cuda.is_available():
         cfg.MODEL.DEVICE = "cuda"
     else:
