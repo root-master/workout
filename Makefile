@@ -18,8 +18,8 @@ install_detectron2:
 
 download_checkpoints:
 	mkdir checkpoints && \
-	curl https://dl.fbaipublicfiles.com/detectron2/COCO-Keypoints/keypoint_rcnn_R_101_FPN_3x/138363331/model_final_997cc7.pkl -o checkpoints/model_final_997cc7.pkl
-
+	curl https://dl.fbaipublicfiles.com/detectron2/COCO-Keypoints/keypoint_rcnn_R_101_FPN_3x/138363331/model_final_997cc7.pkl -o checkpoints/model_final_997cc7.pkl && \
+	curl https://dl.fbaipublicfiles.com/video-pose-3d/pretrained_h36m_detectron_coco.bin -o checkpoints/pretrained_h36m_detectron_coco.bin
 build_wheel:
 	python3 setup.py bdist_wheel
 
@@ -42,19 +42,18 @@ pylint:
 	pylint --rcfile=pylintrc features && \
 	python -m pycodestyle --max-line-length=120 features --config pycodestyle
 
-.EXPORT_ALL_VARIABLES:
-	export FLASK_RUN_PORT=5002 && \
-	export FLASK_RUN_HOST="0.0.0.0" && \
-	export FLASK_ENV="production" && \
-	export FLASK_APP="features/server/app.py"
+install_redis_server:
+	source "./source/redis.sh"
 
 run_redis_server:
-	source "./source/redis.sh"
+	make install_redis_server && \
+	redis-stable/src/redis-server
 
 run_celery_server:
 	celery -A features.server.app.celery worker --loglevel=info
 
 run_features_flask_server:
+	source "./source/environment_variables.sh" && \
 	flask run
 
 run_all_servers_for_flask_server:
