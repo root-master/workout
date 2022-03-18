@@ -18,8 +18,8 @@ install_detectron2:
 
 download_checkpoints:
 	mkdir checkpoints && \
-	curl https://dl.fbaipublicfiles.com/detectron2/COCO-Keypoints/keypoint_rcnn_R_101_FPN_3x/138363331/model_final_997cc7.pkl -o checkpoints/model_final_997cc7.pkl
-
+	curl https://dl.fbaipublicfiles.com/detectron2/COCO-Keypoints/keypoint_rcnn_R_101_FPN_3x/138363331/model_final_997cc7.pkl -o checkpoints/model_final_997cc7.pkl && \
+	curl https://dl.fbaipublicfiles.com/video-pose-3d/pretrained_h36m_detectron_coco.bin -o checkpoints/pretrained_h36m_detectron_coco.bin
 build_wheel:
 	python3 setup.py bdist_wheel
 
