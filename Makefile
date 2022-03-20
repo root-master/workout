@@ -50,9 +50,11 @@ run_redis_server:
 	redis-stable/src/redis-server
 
 run_celery_server:
+	source .penv/bin/activate && \
 	celery -A features.server.app.celery worker --loglevel=info
 
 run_features_flask_server:
+	source .penv/bin/activate && \
 	source "./source/environment_variables.sh" && \
 	flask run
 
