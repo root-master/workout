@@ -2,6 +2,7 @@ from flask import Flask, jsonify, url_for
 from flask import request
 from flask_cors import CORS
 from celery import Celery
+
 from features.pipeline import features_pipeline
 
 

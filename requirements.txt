@@ -16,3 +16,5 @@ pytest
 pylint
 pycodestyle
 pycocotools~=2.0.4
+gunicorn
+
