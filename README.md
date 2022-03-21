@@ -98,10 +98,11 @@ sudo chown -R $USER:$USER /etc/nginx/sites-available/ml.workout.vision
 Add this to /etc/nginx/sites-available/ml.workout.vision
 ```
 server {
-listen 80;
-location / {
-proxy_pass http://127.0.0.1:8000/;
-}
+    server_name ml.workout.vision 52.34.79.7;
+    listen 80;
+    location / {
+        proxy_pass http://127.0.0.1:8000/;
+    }
 }
 ```
 
