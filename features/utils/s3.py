@@ -33,6 +33,13 @@ def save_json(data: List[Dict], path_to_json: str):
         json.dump(data, f, sort_keys=True, indent=4)
 
 
+def read_json_from_s3(bucket, key):
+    s3_client = create_boto3_client()
+    response = s3_client.get_object(Bucket=bucket, Key=key)
+    content = response["Body"]
+    return json.loads(content.read())
+
+
 def write_json_to_s3(data, bucket, key):
     """Writes a JSON test_data to s3://bucket/key"""
     s3_client = create_boto3_client()
