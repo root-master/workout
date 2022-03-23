@@ -86,9 +86,11 @@ def get_angle_key_for_movement(movement_name: str):
     TODO: we actually should return a list or object of angles and distances.
     TODO: Also the logic of finding key is scrappy
     """
+    if movement_name is None:
+        return None
     keys = list(movements_angle_dict.keys())
     for key in keys:
-        if key in movement_name.lower():
+        if isinstance(movement_name, str) and key in movement_name.lower():
             return movements_angle_dict[key]
     return None
 
