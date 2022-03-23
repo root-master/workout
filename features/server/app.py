@@ -75,7 +75,7 @@ def run_features_pipeline_task(user_session_data):
     anim_output_local_path = """/tmp/{}_{}_{}.mp4""".format(user_nickname,
                                                             time_stamp_start,
                                                             time_stamp_end)
-    visualization_s3_key = """user_features/{}/{}_{}.json""".format(user_nickname,
+    visualization_s3_key = """user_visualization/{}/{}_{}.mp4""".format(user_nickname,
                                                                     time_stamp_start,
                                                                     time_stamp_end)
     visualization_s3_bucket = s3_bucket
