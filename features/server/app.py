@@ -98,7 +98,10 @@ def run_features_pipeline_task(user_session_data):
                              "user_feature_flask_job": None,
                              "user_movement_analysis_result": None}
     url = "https://api.workout.vision/user_features"
-    express_response = requests.post(url, data=json.dumps(features_results_dict))
+    headers = {"Content-type": "application/json", "Accept": "text/plain"}
+    express_response = requests.post(url,
+                                     data=json.dumps(features_results_dict),
+                                     headers=headers)
 
     return features_results_dict, express_response.json()
 
