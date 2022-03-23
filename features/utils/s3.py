@@ -48,3 +48,18 @@ def write_json_to_s3(data, bucket, key):
         Bucket=bucket,
         Key=key
     )
+
+
+def upload_file_to_s3(file_name, bucket, key):
+    """Upload a file to an S3 bucket
+
+    :param file_name: File to upload
+    :param bucket: Bucket to upload to
+    :param key: S3 object name.
+    :return: True if file was uploaded, else False
+    """
+
+    # Upload the file
+    s3_client = create_boto3_client()
+    response = s3_client.upload_file(file_name, bucket, key)
+    return response
