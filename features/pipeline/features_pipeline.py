@@ -110,4 +110,4 @@ def run(video_source: str = None,
             raise KeyError
     print("-" * 60)
 
-    return list_of_pose_features_dict
+    return list_of_frames, list_of_pose_features_dict

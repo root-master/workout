@@ -51,7 +51,7 @@ run_redis_server:
 
 run_celery_server:
 	source .penv/bin/activate && \
-	celery -A features.server.app.celery worker --loglevel=info
+	celery -A features.server.app.celery worker --pool solo --loglevel=info
 
 run_features_flask_server:
 	source .penv/bin/activate && \

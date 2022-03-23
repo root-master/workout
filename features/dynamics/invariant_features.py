@@ -9,6 +9,7 @@ import numpy
 
 from features.dynamics.features_defintions import (videoPose3D_keypoints_name_to_index_mapping_dict,
                                                    angle_features_definition_dict,
+                                                   movements_angle_dict,
                                                    Z_axis)
 
 
@@ -78,6 +79,18 @@ def read_json(local_path: str) -> List[Dict]:
     with open(local_path) as f:
         pose_data_list = json.load(f)
     return pose_data_list
+
+
+def get_angle_key_for_movement(movement_name: str):
+    """
+    TODO: we actually should return a list or object of angles and distances.
+    TODO: Also the logic of finding key is scrappy
+    """
+    keys = list(movements_angle_dict.keys())
+    for key in keys:
+        if key in movement_name.lower():
+            return movements_angle_dict[key]
+    return None
 
 
 def run(list_of_pose_features_dict, fps=30.0, camera_to_world_view=True):

@@ -149,3 +149,9 @@ custom_camera_params = {
     "orientation": [0.1407056450843811, -0.1500701755285263, -0.755240797996521, 0.6223280429840088],
     "translation": [1841.1070556640625, 4955.28466796875, 1563.4454345703125],
 }
+
+movements_angle_dict = {
+    # "squat": ["left_knee_left_hip_with_left_ankle_left_knee", "right_knee_right_hip_with_right_ankle_right_knee"],
+    "squat": "left_knee_left_hip_with_left_ankle_left_knee",
+    "neck": "neck_head_with_Z_axis"
+}
