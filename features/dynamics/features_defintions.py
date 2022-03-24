@@ -59,12 +59,12 @@ for k, v in videoPose3D_keypoints_index_to_name_mapping_dict.items():
     videoPose3D_keypoints_name_to_index_mapping_dict[v] = k
 
 angle_features_definition_list = [
-    [("left_knee", "left_hip"), ("left_ankle", "left_knee")],
-    [("right_knee", "right_hip"), ("right_ankle", "right_knee")],
+    [("left_knee", "left_hip"), ("left_knee", "left_ankle")],
+    [("right_knee", "right_hip"), ("right_knee", "right_ankle")],
     [("left_hip", "left_shoulder"), ("left_knee", "left_hip")],
     [("right_hip", "right_shoulder"), ("right_knee", "right_hip")],
-    [("left_shoulder", "left_elbow"), ("left_elbow", "left_wrist")],
-    [("right_shoulder", "right_elbow"), ("right_elbow", "right_wrist")],
+    [("left_elbow", "left_shoulder"), ("left_elbow", "left_wrist")],
+    [("right_elbow", "right_shoulder"), ("right_elbow", "right_wrist")],
     [("left_shoulder", "left_elbow"), ("left_shoulder", "left_hip")],
     [("right_shoulder", "right_elbow"), ("right_shoulder", "right_hip")],
     [("left_shoulder", "left_elbow"), ("left_shoulder", "left_hip")],
@@ -152,6 +152,7 @@ custom_camera_params = {
 
 movements_angle_dict = {
     # "squat": ["left_knee_left_hip_with_left_ankle_left_knee", "right_knee_right_hip_with_right_ankle_right_knee"],
-    "squat": "left_knee_left_hip_with_left_ankle_left_knee",
-    "neck": "neck_head_with_Z_axis"
+    "squat": "left_knee_left_hip_with_left_knee_left_ankle",
+    "neck": "neck_head_with_Z_axis",
+    "pull-up": "left_elbow_left_shoulder_with_left_elbow_left_wrist"
 }

@@ -6,9 +6,6 @@ import numpy
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 from matplotlib.gridspec import GridSpec
-from features.utils.s3 import read_json_from_s3
-from features.utils.s3 import get_url_video_s3
-from features.utils import video
 from features.pose_estimation.inference_3d.utils import camera_to_world
 
 custom_camera_params = {
@@ -54,6 +51,10 @@ def init_plot(ax2, angle_key, features_list):
     ax2.set_xlabel("Frame Number")
     ax2.set_ylabel(angle_key)
     frames, theta_list = extract_angle(features_list, angle_key)
+    theta_list = [theta * 180 / numpy.pi for theta in theta_list]
+    # max_theta = max(theta_list)
+    # min_theta = min(theta_list)
+    # text = "MIN angle = {} and MAX = {}".format(int(min_theta), int(max_theta))
     line = ax2.plot(frames, theta_list, color="blue", linewidth=3.0)
     point = ax2.plot(frames[0], theta_list[0], "o", color="red", markersize=12)
     return line, point
@@ -123,6 +124,7 @@ def update_2d(frame_number, image, list_of_frames, features_list):
 
 def update_plot(frame_number, line, point, angle_key, features_list):
     frames, theta_list = extract_angle(features_list, angle_key)
+    theta_list = [theta * 180 / numpy.pi for theta in theta_list]
     line[0].set_xdata(frames)
     line[0].set_ydata(theta_list)
     point[0].set_xdata([frames[frame_number]])
