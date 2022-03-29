@@ -71,7 +71,7 @@ def run_features_pipeline_task(user_session_data):
     angle_key = get_angle_key_for_movement(movement_name)
     # TODO: Fix the default angle_key
     if angle_key is None:
-        angle_key = "left_knee_left_hip_with_left_ankle_left_knee"
+        angle_key = get_angle_key_for_movement("default")
     anim_output_local_path = """/tmp/{}_{}_{}.mp4""".format(user_nickname,
                                                             time_stamp_start,
                                                             time_stamp_end)

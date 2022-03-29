@@ -154,5 +154,6 @@ movements_angle_dict = {
     # "squat": ["left_knee_left_hip_with_left_ankle_left_knee", "right_knee_right_hip_with_right_ankle_right_knee"],
     "squat": "left_knee_left_hip_with_left_knee_left_ankle",
     "neck": "neck_head_with_Z_axis",
-    "pull-up": "left_elbow_left_shoulder_with_left_elbow_left_wrist"
+    "pull-up": "left_elbow_left_shoulder_with_left_elbow_left_wrist",
+    "default": "left_knee_left_hip_with_left_knee_left_ankle"
 }
