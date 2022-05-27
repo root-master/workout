@@ -81,14 +81,14 @@ def run_features_pipeline_task(user_session_data):
     visualization_s3_bucket = s3_bucket
     video_duration = (time_stamp_end - time_stamp_start) / 1000.0
     fps = float(len(list_of_frames)) / video_duration
-    _ = visualization_pipeline.run(list_of_frames,
-                                   list_of_pose_features_dict,
-                                   angle_key,
-                                   visualization_s3_bucket,
-                                   visualization_s3_key,
-                                   anim_output_local_path,
-                                   fps)
-    user_visualization_s3_dict = {"bucket": visualization_s3_bucket, "key": visualization_s3_key}
+    # _ = visualization_pipeline.run(list_of_frames,
+    #                                list_of_pose_features_dict,
+    #                                angle_key,
+    #                                visualization_s3_bucket,
+    #                                visualization_s3_key,
+    #                                anim_output_local_path,
+    #                                fps)
+    # user_visualization_s3_dict = {"bucket": visualization_s3_bucket, "key": visualization_s3_key}
     print("-" * 15 + "  SEND DATA TO EXPRESS  " + "-" * 15)
 
     features_results_dict = {"user_video_id": user_video_id,
