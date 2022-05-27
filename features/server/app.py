@@ -88,7 +88,7 @@ def run_features_pipeline_task(user_session_data):
     #                                visualization_s3_key,
     #                                anim_output_local_path,
     #                                fps)
-    # user_visualization_s3_dict = {"bucket": visualization_s3_bucket, "key": visualization_s3_key}
+    user_visualization_s3_dict = {"bucket": visualization_s3_bucket, "key": visualization_s3_key}
     print("-" * 15 + "  SEND DATA TO EXPRESS  " + "-" * 15)
 
     features_results_dict = {"user_video_id": user_video_id,
