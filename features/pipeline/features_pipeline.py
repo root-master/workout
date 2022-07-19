@@ -111,3 +111,15 @@ def run(video_source: str = None,
     print("-" * 60)
 
     return list_of_frames, list_of_pose_features_dict
+
+
+run(video_source="s3",
+    s3_bucket="workout-vision-public",
+    s3_video_key="training_videos/tarin_standing_pose_ifIbl3wMNog.mp4",
+    video_local_path=None,
+    features_source="s3",
+    s3_features_key="training_features/tarin_standing_pose_ifIbl3wMNog.json",
+    features_local_path=None,
+    frame_start=None,
+    frame_end=None,
+    save_features=True)

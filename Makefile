@@ -58,6 +58,11 @@ run_features_flask_server:
 	source "./source/environment_variables.sh" && \
 	flask run
 
+run_recommendations_flask_server:
+	source .penv/bin/activate && \
+	source "./source/recommendations_environment_variables.sh" && \
+	flask run
+
 run_all_servers_for_flask_server:
 	make run_redis_server &
 	make run_features_flask_server &

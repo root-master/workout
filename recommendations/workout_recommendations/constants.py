@@ -1,3 +1,7 @@
+"""
+Module for workout programs definitions.
+"""
+
 workout_programs_category_dict = {
     "physical_therapy": ["mobility_training", "rehabilitation"],
     "pose_correction": ["mobility_training", "rehabilitation"],
@@ -5,7 +9,7 @@ workout_programs_category_dict = {
     "body_building": ["strength_training"],
     "core_training": ["strength_training"],
     "yoga": ["mobility_training", "flexibility_training", "balance_training"],
-    "high_intensity_interval_training": ["endurance_training"],
+    "high_intensity_interval_training": ["strength_training", "endurance_training"],
     "functional_training": ["strength_training", "endurance_training"],
     "calisthenics": ["strength_training", "endurance_training", "mobility_training"],
     "dance": ["mobility_training", "endurance_training"],
@@ -63,14 +67,6 @@ body_parts_dict = {
     "chest": {},
     "back": {},
     "abs": {}
-}
-
-fitness_dimensions_distribution = {
-    "strength_training": {},
-    "mobility_training": {},
-    "balance_training": {},
-    "flexibility_training": {},
-    "endurance_training": {}
 }
 
 body_parts_list = list(body_parts_dict.keys())
